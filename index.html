@@ -2,281 +2,1669 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VIGNAN SMART ACCESS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIGNAN SMART ACCESS — AI Security Operations Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07111f;--panel:#0d1b2e;--panel2:#10243b;--line:#1d3552;--text:#eaf3ff;--muted:#91a7bf;--blue:#39a7ff;--cyan:#46d9ff;--green:#34d399;--amber:#fbbf24;--red:#fb7185}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 80% 0%,#12365a 0,transparent 35%),var(--bg);color:var(--text)}button,input,select{font:inherit}button{cursor:pointer}
-.app{display:flex;min-height:100vh}.sidebar{width:250px;background:rgba(5,15,28,.9);border-right:1px solid var(--line);padding:22px 16px;position:fixed;height:100vh;z-index:5}.brand{font-weight:800;letter-spacing:.5px;font-size:19px}.brand small{display:block;color:var(--cyan);font-size:10px;margin-top:5px;letter-spacing:1.3px}.nav{margin-top:30px}.nav button{display:flex;width:100%;gap:12px;border:0;background:transparent;color:var(--muted);padding:12px 14px;border-radius:10px;margin:4px 0;text-align:left}.nav button.active,.nav button:hover{background:#102842;color:white}.main{margin-left:250px;width:calc(100% - 250px);padding:25px 30px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.eyebrow{color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:1.5px}.title{font-size:27px;font-weight:800;margin:5px 0}.sub{color:var(--muted);font-size:13px}.status{display:flex;gap:10px;align-items:center}.badge{padding:7px 11px;border:1px solid #22527c;background:#0d2740;border-radius:20px;font-size:11px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:linear-gradient(145deg,rgba(16,36,59,.88),rgba(9,24,41,.9));border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:0 12px 35px rgba(0,0,0,.15)}.kpi .label{color:var(--muted);font-size:12px}.kpi .num{font-size:27px;font-weight:800;margin:8px 0}.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}.blue{color:var(--cyan)}
-.section{margin-top:22px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.section h2{font-size:17px;margin:0}.muted{color:var(--muted)}
-.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gate-img{height:120px;border-radius:12px;background:linear-gradient(135deg,#153d61,#0a1829);display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:13px;position:relative;overflow:hidden}.gate-img:after{content:"CAMPUS GATE";position:absolute;bottom:9px;left:12px;font-size:9px;letter-spacing:1.5px;color:#ffffff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
-.gate-img img{width:100%;height:100%;object-fit:cover;display:block}.gate-img:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.58));z-index:1;pointer-events:none}.gate-image-label{position:absolute;left:12px;bottom:25px;z-index:2;font-size:9px;font-weight:700;letter-spacing:.7px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)}.gate-title{font-size:18px;font-weight:750}.row{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-size:12px}.row span:first-child{color:var(--muted)}.pill{font-size:10px;border-radius:20px;padding:4px 8px;background:#0c2b27;color:var(--green)}.pill.warn{background:#332710;color:var(--amber)}.pill.danger{background:#3a1721;color:var(--red)}.btn{border:1px solid #285a83;background:#113454;color:#dff3ff;border-radius:9px;padding:9px 12px}.btn.primary{background:linear-gradient(135deg,#1689db,#2458d8);border:0;color:white}.btn.danger{background:#401b26;border-color:#6a2938}.actions{display:flex;gap:8px;flex-wrap:wrap}.cols{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.activity{max-height:330px;overflow:auto}.event{padding:12px 0;border-bottom:1px solid #17304a;font-size:12px}.event strong{display:block;font-size:13px}.event .time{color:#6f8ba6;margin-right:8px}.riskbar{height:10px;background:#152b42;border-radius:20px;overflow:hidden;margin:12px 0}.riskbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:78%}.page{display:none}.page.active{display:block}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.field input,.field select{width:100%;background:#081a2d;border:1px solid var(--line);color:white;padding:11px;border-radius:9px;outline:none}.pipeline{display:flex;gap:8px;overflow:auto;margin:20px 0}.agent{min-width:145px;padding:13px;border:1px solid var(--line);border-radius:11px;background:#0b1d31}.agent small{color:var(--muted)}.agent.active{border-color:#278bc6;box-shadow:0 0 18px rgba(57,167,255,.12)}.result{text-align:center;padding:22px;border-radius:13px;background:#0a2032;border:1px solid #21506f}.result h1{margin:5px 0}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{text-align:left;padding:11px;border-bottom:1px solid #18314b;white-space:nowrap}.table th{color:#88a4bd;font-weight:600}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:13px}.device-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.device{padding:15px;border:1px solid var(--line);border-radius:12px;background:#0a1d31}.device h3{font-size:14px;margin:0 0 8px}.map{height:480px;border-radius:16px;border:1px solid var(--line);position:relative;overflow:hidden;background-color:#091b2d;background-image:linear-gradient(#163451 1px,transparent 1px),linear-gradient(90deg,#163451 1px,transparent 1px);background-size:45px 45px}.road{position:absolute;background:#28445f;border-radius:20px;transform:rotate(-18deg)}.road.r1{width:85%;height:24px;left:7%;top:42%}.road.r2{width:24px;height:90%;left:48%;top:5%;transform:rotate(7deg)}.building{position:absolute;background:#12324e;border:1px solid #27516f;border-radius:10px;padding:12px;font-size:11px;color:#b8d1e7}.marker{position:absolute;padding:8px 10px;background:#0d6ca6;border:2px solid #67d8ff;border-radius:20px;font-size:11px;box-shadow:0 0 20px rgba(70,217,255,.4);animation:pulse 1.8s infinite}.m1{left:6%;top:38%}.m2{right:7%;top:20%}.m3{left:50%;bottom:8%}@keyframes pulse{50%{transform:scale(1.05);box-shadow:0 0 30px rgba(70,217,255,.6)}}.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:20}.modal.show{display:flex}.modalbox{width:min(520px,92vw);background:#0c1d31;border:1px solid #28506e;border-radius:16px;padding:22px}.qr{width:150px;height:150px;margin:15px auto;background:repeating-linear-gradient(45deg,#fff 0 5px,#111 5px 10px);border:10px solid white}.toast{position:fixed;right:25px;bottom:25px;background:#102b43;border:1px solid #2d628b;padding:13px 17px;border-radius:11px;display:none;z-index:30}.footer{margin-top:25px;color:#607d98;font-size:10px;text-align:center}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.gates,.device-grid{grid-template-columns:1fr}.cols{grid-template-columns:1fr}}
-@media(max-width:760px){.sidebar{width:70px;padding:16px 8px}.brand{font-size:0}.brand:before{content:"VS";font-size:20px}.brand small,.nav span{display:none}.nav button{justify-content:center}.main{margin-left:70px;width:calc(100% - 70px);padding:18px}.top{align-items:flex-start;gap:10px}.title{font-size:21px}.formgrid,.filters{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.map{height:380px}}
-
-/* ===== VIGNAN CUSTOM LIGHT THEME ===== */
-:root{
-  --bg:#f4f7fb;
-  --panel:#ffffff;
-  --panel2:#f8faff;
-  --line:#dce5f0;
-  --text:#17233b;
-  --muted:#61718a;
-  --blue:#1479c9;
-  --cyan:#1596d1;
-  --purple:#8274c6;
-  --green:#169b68;
-  --amber:#b87900;
-  --red:#df2633;
+:root {
+  --bg: #f4f7fb;
+  --panel: #ffffff;
+  --panel-hover: #f9fbff;
+  --line: #dce5f0;
+  --text: #17233b;
+  --muted: #61718a;
+  --blue: #1479c9;
+  --blue-hover: #0f61a1;
+  --cyan: #1596d1;
+  --purple: #8274c6;
+  --green: #169b68;
+  --green-bg: #e8f7f0;
+  --amber: #b87900;
+  --amber-bg: #fff5dc;
+  --red: #df2633;
+  --red-bg: #ffeaed;
+  --shadow-sm: 0 4px 12px rgba(38, 61, 91, 0.05);
+  --shadow-md: 0 12px 30px rgba(37, 58, 86, 0.07);
+  --shadow-lg: 0 24px 60px rgba(21, 40, 64, 0.12);
 }
-body{
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background:
-    radial-gradient(circle at 85% 0%, rgba(130,116,198,.16) 0, transparent 28%),
-    radial-gradient(circle at 0% 100%, rgba(20,121,201,.10) 0, transparent 30%),
+    radial-gradient(circle at 90% 0%, rgba(130, 116, 198, 0.15) 0%, transparent 28%),
+    radial-gradient(circle at 0% 100%, rgba(20, 121, 201, 0.08) 0%, transparent 32%),
     var(--bg);
-  color:var(--text);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
-.sidebar{
-  background:rgba(255,255,255,.96);
-  border-right:1px solid #dce5f0;
-  box-shadow:8px 0 28px rgba(38,61,91,.07);
+
+button, input, select, textarea { font-family: inherit; font-size: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+.app { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: rgba(255, 255, 255, 0.98);
+  border-right: 1px solid var(--line);
+  padding: 24px 16px;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 6px 0 24px rgba(38, 61, 91, 0.04);
 }
-.brand-with-logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:16px;
-  color:#1b2740;
+
+.brand-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
 }
-.brand-with-logo img{
-  width:48px;
-  height:48px;
-  object-fit:contain;
-  border-radius:8px;
-  background:#fff;
+.brand-with-logo img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.brand-with-logo small{
-  color:var(--blue);
+.brand-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #17233b;
+  letter-spacing: 0.2px;
+  line-height: 1.2;
 }
-.nav button{
-  color:#61718a;
+.brand-title small {
+  display: block;
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 3px;
 }
-.nav button.active,.nav button:hover{
-  background:linear-gradient(90deg,rgba(20,121,201,.12),rgba(130,116,198,.10));
-  color:#123d66;
+
+.nav { margin-top: 20px; flex: 1; overflow-y: auto; }
+.nav button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  color: var(--muted);
+  padding: 11px 14px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s ease;
 }
-.card{
-  background:rgba(255,255,255,.94);
-  border-color:#dce5f0;
-  box-shadow:0 12px 30px rgba(37,58,86,.07);
+.nav button svg { width: 18px; height: 18px; stroke-width: 2; flex-shrink: 0; }
+.nav button:hover {
+  background: rgba(20, 121, 201, 0.07);
+  color: var(--blue);
 }
-.eyebrow{color:#6d5db4}
-.sub,.muted{color:#61718a}
-.title{color:#15223a}
-.badge{
-  border-color:#cbd9e8;
-  background:#f1f7fd;
-  color:#315777;
+.nav button.active {
+  background: linear-gradient(90deg, rgba(20, 121, 201, 0.14), rgba(130, 116, 198, 0.10));
+  color: #123d66;
+  font-weight: 700;
+  border-left: 3px solid var(--blue);
 }
-.btn{
-  border-color:#c8d8e8;
-  background:#fff;
-  color:#214b70;
+
+.sidebar-footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.btn.primary{
-  background:linear-gradient(135deg,#1479c9,#6658b5);
-  color:#fff;
+
+/* MAIN CONTENT */
+.main {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  padding: 28px 36px;
+  position: relative;
 }
-.btn.danger{
-  background:#fff0f2;
-  border-color:#efb7bd;
-  color:#c51f2d;
+.main:before {
+  content: "";
+  position: fixed;
+  left: 260px;
+  top: 0;
+  width: 140px;
+  height: 3px;
+  background: linear-gradient(90deg, #1479c9 0 55%, #8274c6 55% 80%, #df2633 80%);
+  z-index: 10;
 }
-.gate-img{
-  background:
-    linear-gradient(135deg,rgba(20,121,201,.92),rgba(130,116,198,.92)),
-    #eaf3fb;
+
+/* TOP HEADER */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 20px;
 }
-.gate-img:after{color:#eaf5ff}
-.pill{background:#e8f7f0;color:#12805a}
-.pill.warn{background:#fff5dc;color:#a46c00}
-.pill.danger{background:#ffeaed;color:#c51f2d}
-.event{border-bottom-color:#e5ebf3}
-.event .time{color:#7a8ba1}
-.riskbar{background:#e7edf4}
-.riskbar i{background:linear-gradient(90deg,#24a66f,#2c8fd1)}
-.agent{
-  background:#f8fbff;
-  border-color:#dce5f0;
+.eyebrow {
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 }
-.agent.active{
-  border-color:#4b9bd2;
-  box-shadow:0 0 18px rgba(20,121,201,.12);
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #15223a;
+  letter-spacing: -0.3px;
+  margin: 3px 0;
 }
-.result{
-  background:#f7fbff;
-  border-color:#cfe0ee;
+.sub {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
 }
-.field input,.field select{
-  background:#fff;
-  border-color:#d6e1ec;
-  color:#17233b;
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.table th,.table td{border-bottom-color:#e2e9f1}
-.table th{color:#60738b}
-.device{
-  background:#f9fbfd;
-  border-color:#dce5f0;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 1px solid #cbd9e8;
+  background: #f1f7fd;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #274d71;
 }
-.map{
-  background-color:#edf4f9;
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(22, 155, 104, 0.7);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.9); } }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #c8d8e8;
+  background: #ffffff;
+  color: #214b70;
+  border-radius: 9px;
+  padding: 9px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+.btn:hover { background: #f5f9fd; border-color: #b5cbe0; }
+.btn.primary {
+  background: linear-gradient(135deg, #1479c9, #6658b5);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(20, 121, 201, 0.25);
+}
+.btn.primary:hover {
+  background: linear-gradient(135deg, #0e6db6, #584aa5);
+  box-shadow: 0 6px 18px rgba(20, 121, 201, 0.35);
+}
+.btn.danger {
+  background: var(--red-bg);
+  border-color: #efb7bd;
+  color: var(--red);
+}
+.btn.danger:hover { background: #ffe0e4; }
+.btn.sm { padding: 6px 10px; font-size: 12px; border-radius: 7px; }
+
+/* GRID & CARDS */
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px; }
+.card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+.kpi .label { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi .num { font-size: 28px; font-weight: 800; color: #15223a; margin: 8px 0 4px; font-family: 'JetBrains Mono', monospace; }
+.kpi .trend { font-size: 12px; font-weight: 600; }
+.green { color: var(--green); }
+.amber { color: var(--amber); }
+.red { color: var(--red); }
+.blue { color: var(--blue); }
+
+.section { margin-top: 24px; }
+.section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.section h2 { font-size: 17px; font-weight: 800; color: #17233b; }
+.muted { color: var(--muted); font-size: 13px; }
+
+/* GATES CARDS */
+.gates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.gate-img {
+  height: 140px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: #e6eef5;
+}
+.gate-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.gate-img:hover img { transform: scale(1.04); }
+.gate-img:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%);
+  z-index: 1;
+}
+.gate-image-label {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  z-index: 2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+.gate-title { font-size: 18px; font-weight: 800; color: #17233b; margin-bottom: 4px; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px dashed #eef3f8;
+  font-size: 12.5px;
+}
+.row:last-of-type { border-bottom: none; }
+.row span:first-child { color: var(--muted); }
+.row b { color: #17233b; font-weight: 700; }
+
+.pill {
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 3px 9px;
+  background: var(--green-bg);
+  color: var(--green);
+  display: inline-block;
+  letter-spacing: 0.3px;
+}
+.pill.warn { background: var(--amber-bg); color: var(--amber); }
+.pill.danger { background: var(--red-bg); color: var(--red); }
+
+.cols { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 18px; margin-top: 18px; }
+.activity { max-height: 320px; overflow-y: auto; }
+.event {
+  padding: 11px 0;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 12px;
+}
+.event:last-child { border-bottom: none; }
+.event strong { display: block; font-size: 13px; color: #17233b; }
+.event .time { color: var(--muted); margin-right: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+.riskbar { height: 10px; background: #e7edf4; border-radius: 20px; overflow: hidden; margin: 14px 0 16px; }
+.riskbar i { display: block; height: 100%; background: linear-gradient(90deg, #169b68, #1479c9); width: 78%; border-radius: 20px; }
+
+/* PAGES */
+.page { display: none; animation: fadeIn 0.2s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* GATE ACCESS VIEW & BARRIER SIMULATOR */
+.formgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
+.field label { display: block; color: var(--muted); font-size: 11px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px; }
+.field input, .field select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #d0deec;
+  color: #17233b;
+  padding: 10px 12px;
+  border-radius: 9px;
+  outline: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 0.15s ease;
+}
+.field input:focus, .field select:focus { border-color: var(--blue); }
+
+.barrier-box {
+  background: linear-gradient(135deg, #14283d, #0b1a2a);
+  border-radius: 14px;
+  padding: 24px;
+  color: white;
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.barrier-visual {
+  height: 160px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.barrier-post {
+  width: 32px;
+  height: 80px;
+  background: #395273;
+  border-radius: 6px 6px 0 0;
+  position: absolute;
+  bottom: 20px;
+  left: 60px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.barrier-arm {
+  width: 180px;
+  height: 10px;
+  background: repeating-linear-gradient(45deg, #df2633 0 15px, #ffffff 15px 30px);
+  position: absolute;
+  bottom: 80px;
+  left: 74px;
+  transform-origin: left center;
+  transform: rotate(0deg);
+  border-radius: 4px;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.barrier-arm.open { transform: rotate(-75deg); }
+.barrier-led {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--red);
+  box-shadow: 0 0 12px var(--red);
+  transition: all 0.3s ease;
+}
+.barrier-led.green { background: var(--green); box-shadow: 0 0 16px var(--green); }
+
+.pipeline { display: flex; gap: 8px; overflow-x: auto; margin: 20px 0; padding-bottom: 6px; }
+.agent-step {
+  min-width: 135px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f8fbff;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+.agent-step b { display: block; font-size: 12px; color: #17233b; }
+.agent-step small { color: var(--muted); font-size: 11px; }
+.agent-step.active {
+  border-color: var(--blue);
+  background: #ffffff;
+  box-shadow: 0 0 16px rgba(20, 121, 201, 0.15);
+  transform: translateY(-2px);
+}
+.agent-step.done {
+  border-color: #24a66f;
+  background: #f1fdf7;
+}
+
+.result {
+  text-align: center;
+  padding: 24px;
+  border-radius: 12px;
+  background: #f7fbff;
+  border: 1px solid #cfe0ee;
+  margin-top: 16px;
+}
+.result h1 { margin: 6px 0 14px; font-size: 24px; font-weight: 800; }
+
+/* CAMPUS MAP */
+.map {
+  height: 480px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  background-color: #edf4f9;
   background-image:
-    linear-gradient(#d8e4ee 1px,transparent 1px),
-    linear-gradient(90deg,#d8e4ee 1px,transparent 1px);
+    linear-gradient(#d8e4ee 1px, transparent 1px),
+    linear-gradient(90deg, #d8e4ee 1px, transparent 1px);
+  background-size: 45px 45px;
 }
-.road{background:#c9d7e4}
-.building{
-  background:#fff;
-  border-color:#bcd1e3;
-  color:#35526d;
-  box-shadow:0 6px 18px rgba(48,73,101,.08);
+.road { position: absolute; background: #c9d7e4; border-radius: 20px; }
+.road.r1 { width: 85%; height: 26px; left: 7%; top: 42%; transform: rotate(-16deg); }
+.road.r2 { width: 26px; height: 90%; left: 50%; top: 5%; transform: rotate(8deg); }
+.building {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #bcd1e3;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #274b70;
+  box-shadow: 0 6px 18px rgba(48, 73, 101, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease;
 }
-.marker{
-  background:#1479c9;
-  border-color:#7cc8ef;
+.building:hover { transform: translateY(-2px); }
+.marker {
+  position: absolute;
+  padding: 8px 12px;
+  background: #1479c9;
+  border: 2px solid #ffffff;
+  color: white;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(20, 121, 201, 0.4);
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.2s ease;
 }
-.modal{background:rgba(17,29,47,.52)}
-.modalbox{
-  background:#fff;
-  border-color:#d4e0ec;
-  color:#17233b;
-  box-shadow:0 24px 70px rgba(21,40,64,.22);
-}
-.toast{
-  background:#fff;
-  border-color:#cdddea;
-  color:#17233b;
-  box-shadow:0 12px 30px rgba(37,58,86,.14);
-}
-.footer{color:#75869b}
+.marker:hover { transform: scale(1.08); }
+.m1 { left: 8%; top: 38%; }
+.m2 { right: 8%; top: 22%; }
+.m3 { left: 50%; bottom: 10%; }
 
-/* Small VIGNAN accent stripe on the main content */
-.main{position:relative}
-.main:before{
-  content:"";
-  position:fixed;
-  left:250px;
-  top:0;
-  width:100px;
-  height:3px;
-  background:linear-gradient(90deg,#1479c9 0 55%,#8274c6 55% 78%,#df2633 78%);
-  z-index:10;
+/* TABLES & FILTERS */
+.tablewrap { overflow-x: auto; margin-top: 12px; }
+.table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.table th, .table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #e5ebf3; white-space: nowrap; }
+.table th { color: #60738b; font-weight: 700; background: #fafcff; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+.table tbody tr:hover { background: #fbfdff; }
+.filters { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+/* DEVICES GRID */
+.device-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.device {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfdff;
+  box-shadow: var(--shadow-sm);
 }
-@media(max-width:760px){
-  .main:before{left:70px}
-  .brand-with-logo img{width:38px;height:38px}
-  .brand-with-logo{justify-content:center}
+.device h3 { font-size: 14px; font-weight: 800; color: #17233b; margin-bottom: 10px; }
+
+/* MODAL & TOAST */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 29, 47, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.show { display: flex; }
+.modalbox {
+  width: min(540px, 94vw);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: var(--shadow-lg);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
+.toast {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  background: #17233b;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  display: none;
+  z-index: 2000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: slideUp 0.2s ease;
+}
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.footer { margin-top: 36px; color: #7a8ba1; font-size: 11px; text-align: center; }
+
+/* VISITOR QR PASS CONTAINER */
+.visitor-badge {
+  border: 2px dashed #b7cde3;
+  background: #fafcfe;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  margin: 16px 0;
+}
+.qr-canvas-holder {
+  width: 170px;
+  height: 170px;
+  margin: 14px auto;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d0deec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width: 1100px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .gates, .device-grid { grid-template-columns: 1fr; }
+  .cols { grid-template-columns: 1fr; }
+  .barrier-box { grid-template-columns: 1fr; }
+}
+@media(max-width: 768px) {
+  .sidebar { width: 70px; padding: 16px 8px; }
+  .brand-title, .sidebar-footer, .nav span { display: none; }
+  .nav button { justify-content: center; padding: 12px; }
+  .main { margin-left: 70px; width: calc(100% - 70px); padding: 18px; }
+  .main:before { left: 70px; }
+  .formgrid, .filters { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+
 <div class="app">
-<aside class="sidebar">
-  <div class="brand brand-with-logo">
-    <img src="vignan-logo.jpg" alt="VIGNAN University logo">
-    <div>VIGNAN SMART ACCESS<small>AI SECURITY OPERATIONS</small></div>
-  </div>
-  <nav class="nav">
-    <button class="active" data-page="dashboard">◈ <span>Dashboard</span></button>
-    <button data-page="map">⌖ <span>Campus Map</span></button>
-    <button data-page="access">▣ <span>Gate Access</span></button>
-    <button data-page="visitors">♙ <span>Visitor Management</span></button>
-    <button data-page="agents">✦ <span>AI Agents</span></button>
-    <button data-page="logs">≡ <span>Access Logs</span></button>
-    <button data-page="iot">⌁ <span>IoT Devices</span></button>
-    <button data-page="alerts">⚠ <span>Alerts</span></button>
-  </nav>
-</aside>
-<main class="main">
-<header class="top"><div><div class="eyebrow">VIGNAN'S FOUNDATION FOR SCIENCE, TECHNOLOGY & RESEARCH</div><div class="title">VIGNAN SMART ACCESS</div><div class="sub">Agentic AI-Driven Smart Campus Access Management · Vadlamudi, Guntur, Andhra Pradesh</div></div><div class="status"><span class="badge"><i class="dot"></i> SYSTEM OPERATIONAL</span><button class="btn primary" onclick="runDemo()">▶ Run Demo</button></div></header>
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar">
+    <div class="brand-with-logo">
+      <img src="vignan-logo.jpg" alt="Vignan University Logo" onerror="this.src='https://via.placeholder.com/46?text=VU'">
+      <div class="brand-title">
+        VIGNAN SMART ACCESS
+        <small>AI SECURITY OPERATIONS</small>
+      </div>
+    </div>
 
-<section id="dashboard" class="page active">
-<div class="grid">
-<div class="card kpi"><div class="label">Total Authorized Entries</div><div class="num">2,846</div><div class="green">↑ 8.4% today</div></div>
-<div class="card kpi"><div class="label">Current People Inside</div><div class="num" id="inside">1,428</div><div class="blue">Live estimate</div></div>
-<div class="card kpi"><div class="label">Pending Verification</div><div class="num" id="pending">17</div><div class="amber">Needs review</div></div>
-<div class="card kpi"><div class="label">High Risk Alerts</div><div class="num red" id="alertCount">3</div><div class="red">Security attention</div></div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button data-page="map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <span>Campus Map</span>
+      </button>
+      <button data-page="access">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Gate Access</span>
+      </button>
+      <button data-page="visitors">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Visitor Management</span>
+      </button>
+      <button data-page="agents">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>AI Agents</span>
+      </button>
+      <button data-page="logs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span>Access Logs</span>
+      </button>
+      <button data-page="iot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <span>IoT Devices</span>
+      </button>
+      <button data-page="alerts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>Security Alerts</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span>VFSTR Vadlamudi</span>
+      <span class="badge" style="padding: 2px 7px; font-size: 9px;">v1.0-SOC</span>
+    </div>
+  </aside>
+
+  <!-- MAIN OPERATIONAL VIEW -->
+  <main class="main">
+    <header class="top">
+      <div>
+        <div class="eyebrow">VIGNAN'S FOUNDATION FOR SCIENCE, TECHNOLOGY & RESEARCH</div>
+        <div class="title">VIGNAN SMART ACCESS</div>
+        <div class="sub">Agentic AI-Driven Campus Perimeter Management · Vadlamudi, Guntur, AP</div>
+      </div>
+      <div class="top-actions">
+        <span class="badge"><i class="dot"></i> SYSTEM OPERATIONAL</span>
+        <button class="btn sm" id="soundToggle" onclick="toggleSound()">🔊 Sound On</button>
+        <button class="btn primary" onclick="runDemo()">▶ Run Demo Flow</button>
+      </div>
+    </header>
+
+    <!-- 1. DASHBOARD PAGE -->
+    <section id="dashboard" class="page active">
+      <div class="grid">
+        <div class="card kpi">
+          <div class="label">Total Authorized Entries</div>
+          <div class="num" id="totalEntries">2,846</div>
+          <div class="trend green">↑ 8.4% today</div>
+        </div>
+        <div class="card kpi">
+          <div class="label">Current People Inside</div>
+          <div class="num blue" id="inside">1,428</div>
+          <div class="trend blue">Live estimate (Entries - Exits)</div>
+        </div>
+        <div class="card kpi">
+          <div class="label">Pending Verification</div>
+          <div class="num amber" id="pending">17</div>
+          <div class="trend amber">Requires guard action</div>
+        </div>
+        <div class="card kpi">
+          <div class="label">Active High-Risk Alerts</div>
+          <div class="num red" id="alertCount">3</div>
+          <div class="trend red">Security attention</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>VIGNAN UNIVERSITY — CAMPUS ENTRY POINTS</h2>
+          <span class="badge">3 MONITORED PERIMETER GATES</span>
+        </div>
+        <div class="gates" id="gateCards"></div>
+        <div class="muted" style="margin-top: 10px; font-size: 11px;">
+          Note: Photographs are campus architectural reference points for visual orientation across University Gate, Lara Gate, and Library Gate.
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="card">
+          <div class="section-head">
+            <h2>Recent Gate Activity</h2>
+            <span class="pill">LIVE FEED</span>
+          </div>
+          <div class="activity" id="activity"></div>
+        </div>
+        <div class="card">
+          <div class="section-head">
+            <h2>AI Risk Overview</h2>
+            <span class="pill">ENGINE ACTIVE</span>
+          </div>
+          <div style="font-size: 34px; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
+            78% <span class="muted" style="font-size: 13px; font-weight: 600;">LOW RISK</span>
+          </div>
+          <div class="riskbar"><i></i></div>
+          <div class="row"><span>Low Risk Clearances</span><b class="green">78%</b></div>
+          <div class="row"><span>Medium Risk (Inspection)</span><b class="amber">18%</b></div>
+          <div class="row"><span>High Risk (Alert Triggered)</span><b class="red">4%</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CAMPUS MAP PAGE -->
+    <section id="map" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>VIGNAN UNIVERSITY CAMPUS MAP</h2>
+            <div class="muted">Interactive spatial overview · live gate security overlay</div>
+          </div>
+          <span class="badge">SPATIAL TELEMETRY</span>
+        </div>
+
+        <div class="map">
+          <div class="road r1"></div>
+          <div class="road r2"></div>
+          <div class="building" style="left: 26%; top: 18%;" onclick="toast('Academic Block: 840 students present')">
+            🏢 Main Academic Block
+          </div>
+          <div class="building" style="left: 60%; top: 12%;" onclick="toast('Hostels: 610 residents present')">
+            🏨 Student Hostels
+          </div>
+          <div class="building" style="left: 24%; bottom: 18%;" onclick="toast('NTR Library: 312 students in study halls')">
+            📚 NTR Central Library
+          </div>
+          <div class="building" style="right: 12%; bottom: 18%;" onclick="toast('Lara Campus Complex: Active classes')">
+            🏛️ Lara Engineering Block
+          </div>
+
+          <div class="marker m1" onclick="showGate(0)">
+            ● University Gate (Main)
+          </div>
+          <div class="marker m2" onclick="showGate(1)">
+            ● Lara Gate
+          </div>
+          <div class="marker m3" onclick="showGate(2)">
+            ● Library Gate
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. GATE ACCESS SIMULATION PAGE -->
+    <section id="access" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>SMART GATE ACCESS CONTROL</h2>
+            <div class="muted">Simulated identity, authorization, and 6-agent risk decision engine</div>
+          </div>
+          <span class="badge">INTERACTIVE TEST BENCH</span>
+        </div>
+
+        <div class="formgrid">
+          <div class="field">
+            <label>SELECT GATE</label>
+            <select id="gate">
+              <option>University Gate</option>
+              <option>Lara Gate</option>
+              <option>Library Gate</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>USER TYPE</label>
+            <select id="utype">
+              <option>Student</option>
+              <option>Faculty</option>
+              <option>Parent</option>
+              <option>Visitor</option>
+              <option>Vendor</option>
+              <option>Event Guest</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>PERSON / CREDENTIAL ID</label>
+            <input id="pid" value="STU20261245">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+          <button class="btn sm" onclick="loadProfile('student')">Student (Rahul Kumar - Valid)</button>
+          <button class="btn sm" onclick="loadProfile('faculty')">Faculty (Dr. Priya Rao - Valid)</button>
+          <button class="btn sm danger" onclick="loadProfile('invalid')">Suspicious ID (Fraud/Unknown)</button>
+          <button class="btn sm danger" onclick="loadProfile('passback')">Anti-Passback Test (Duplicate)</button>
+          <button class="btn primary" style="margin-left: auto;" onclick="verifyAccess()">▶ SCAN & VERIFY ACCESS</button>
+        </div>
+
+        <!-- PHYSICAL BARRIER & HARDWARE VISUALIZATION -->
+        <div class="barrier-box">
+          <div>
+            <div class="eyebrow" style="color: #67d8ff;">PHYSICAL EDGE GATE TELEMETRY</div>
+            <h3 id="barrierGateName" style="margin: 6px 0 10px; font-size: 20px;">University Gate — Barrier Lane 1</h3>
+            <p class="muted" style="color: #9cb3ce; font-size: 12px; margin-bottom: 14px;">
+              ESP32 Controller + RC522 SPI RFID + Optical Beam-Break Sensor
+            </p>
+            <div class="row" style="border-color: rgba(255,255,255,0.1);">
+              <span style="color: #9cb3ce;">Barrier State</span>
+              <b id="barrierStateText" style="color: #ff8595;">CLOSED / FAIL-SECURE</b>
+            </div>
+            <div class="row" style="border-color: rgba(255,255,255,0.1);">
+              <span style="color: #9cb3ce;">Relay Output</span>
+              <b id="relayStateText" style="color: #ffffff;">GPIO 26: LOW</b>
+            </div>
+          </div>
+          <div class="barrier-visual">
+            <div class="barrier-led" id="barrierLed"></div>
+            <div class="barrier-post"></div>
+            <div class="barrier-arm" id="barrierArm"></div>
+            <div style="position: absolute; bottom: 8px; font-size: 10px; color: #6e8ca8; letter-spacing: 1px;">
+              MOTORIZED BOOM BARRIER SIMULATOR
+            </div>
+          </div>
+        </div>
+
+        <!-- 6-AGENT PIPELINE PROGRESS -->
+        <div class="pipeline" id="pipeline"></div>
+        <div id="accessResult"></div>
+      </div>
+    </section>
+
+    <!-- 4. VISITOR MANAGEMENT PAGE -->
+    <section id="visitors" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>VISITOR MANAGEMENT PORTAL</h2>
+            <div class="muted">Digital pre-registration and cryptographic QR access pass generator</div>
+          </div>
+          <span class="badge">VISITOR HUB</span>
+        </div>
+
+        <div class="formgrid">
+          <div class="field">
+            <label>VISITOR FULL NAME</label>
+            <input id="vname" placeholder="e.g. Ramesh Chandra" value="K. V. Subbarao">
+          </div>
+          <div class="field">
+            <label>MOBILE NUMBER</label>
+            <input id="vmobile" placeholder="10-digit mobile" value="9848022334">
+          </div>
+          <div class="field">
+            <label>PURPOSE OF VISIT</label>
+            <input id="purpose" placeholder="Campus Meeting / Project / Admissions" value="Guest Lecture - CSE">
+          </div>
+          <div class="field">
+            <label>HOST FACULTY / DEPT</label>
+            <input id="host" placeholder="Host name or Dept" value="Dr. Priya Rao (CSE HOD)">
+          </div>
+          <div class="field">
+            <label>DATE OF VISIT</label>
+            <input id="vdate" type="date">
+          </div>
+          <div class="field">
+            <label>PREFERRED GATE</label>
+            <select id="vgate">
+              <option>University Gate</option>
+              <option>Lara Gate</option>
+              <option>Library Gate</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <button class="btn primary" onclick="generateVisitorPass()">GENERATE ENCRYPTED QR VISITOR PASS</button>
+        </div>
+
+        <div class="section">
+          <h2>Standard Visitor Verification Lifecycle</h2>
+          <div class="pipeline">
+            <div class="agent-step done"><b>1. Visitor Intake</b><small>Digital Pre-registration</small></div>
+            <div class="agent-step done"><b>2. Host Clearance</b><small>Faculty SMS/Email Approval</small></div>
+            <div class="agent-step done"><b>3. QR Pass Issue</b><small>Time-Expiring Token</small></div>
+            <div class="agent-step done"><b>4. Gate Optical Scan</b><small>Camera / QR Scanner</small></div>
+            <div class="agent-step done"><b>5. AI Decision</b><small>Access Authorized</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. AI AGENTS PAGE -->
+    <section id="agents" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>COORDINATED 6-AGENT AI SECURITY ENGINE</h2>
+            <div class="muted">Continuous autonomous reasoning across credentials, context, and policy</div>
+          </div>
+          <button class="btn primary" onclick="runAgentDiagnostics()">RUN AGENT DIAGNOSTICS</button>
+        </div>
+        <div class="device-grid" id="agentsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 6. ACCESS LOGS PAGE -->
+    <section id="logs" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>CENTRAL ACCESS AUDIT LOGS</h2>
+            <div class="muted">Immutable gate access events with multi-criteria filtering and export</div>
+          </div>
+          <button class="btn" onclick="exportLogs()">📥 Export CSV Logs</button>
+        </div>
+
+        <div class="filters">
+          <input id="searchQuery" placeholder="Search Person ID or Name..." oninput="renderLogs()" style="border: 1px solid #d0deec; border-radius: 9px; padding: 8px 12px; font-size: 13px;">
+          <select id="fgate" onchange="renderLogs()">
+            <option>All Gates</option>
+            <option>University Gate</option>
+            <option>Lara Gate</option>
+            <option>Library Gate</option>
+          </select>
+          <select id="ftype" onchange="renderLogs()">
+            <option>All Types</option>
+            <option>Student</option>
+            <option>Faculty</option>
+            <option>Visitor</option>
+            <option>Vendor</option>
+          </select>
+          <select id="frisk" onchange="renderLogs()">
+            <option>All Risk</option>
+            <option>LOW</option>
+            <option>MEDIUM</option>
+            <option>HIGH</option>
+          </select>
+          <select id="fdecision" onchange="renderLogs()">
+            <option>All Decisions</option>
+            <option>GRANTED</option>
+            <option>DENIED</option>
+            <option>MANUAL REVIEW</option>
+          </select>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Person ID</th>
+                <th>Full Name</th>
+                <th>User Type</th>
+                <th>Gate</th>
+                <th>Risk</th>
+                <th>Decision</th>
+                <th>Method</th>
+              </tr>
+            </thead>
+            <tbody id="logbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. IOT DEVICES PAGE -->
+    <section id="iot" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>IoT SENSOR & CONTROLLER TELEMETRY</h2>
+            <div class="muted">Live monitoring of ESP32s, RC522 readers, cameras, and barrier relays</div>
+          </div>
+          <button class="btn primary" onclick="simulateDeviceFault()">⚡ Simulate Random Device Fault</button>
+        </div>
+        <div class="device-grid" id="devices"></div>
+      </div>
+    </section>
+
+    <!-- 8. SECURITY ALERT CENTER PAGE -->
+    <section id="alerts" class="page">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>SECURITY ALERT RESOLUTION CENTER</h2>
+            <div class="muted">Active perimeter risks requiring security officer intervention</div>
+          </div>
+          <span class="badge" id="activeAlertBadge">3 ACTIVE ALERTS</span>
+        </div>
+        <div id="alertsList"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      VIGNAN SMART ACCESS · Phase 1 SOC Prototype · Vignan's Foundation for Science, Technology & Research (Deemed to be University) · Vadlamudi
+    </div>
+  </main>
 </div>
-<div class="section"><div class="section-head"><h2>VIGNAN UNIVERSITY — CAMPUS ENTRY POINTS</h2><span class="badge">EXACTLY 3 MAIN ENTRY POINTS</span></div>
-<div class="gates" id="gateCards"></div><div class="muted" style="margin-top:10px;font-size:11px">Gate cards use campus/reference photographs for visual identification. They are not live CCTV images or exact gate-camera feeds.</div></div>
-<div class="section cols">
-<div class="card"><div class="section-head"><h2>Recent Access Activity</h2><span class="muted">LIVE</span></div><div class="activity" id="activity"></div></div>
-<div class="card"><div class="section-head"><h2>AI Risk Overview</h2><span class="pill">ENGINE ACTIVE</span></div><div style="font-size:34px;font-weight:800">78% <span class="muted" style="font-size:12px">LOW RISK</span></div><div class="riskbar"><i></i></div><div class="row"><span>Low Risk</span><b class="green">78%</b></div><div class="row"><span>Medium Risk</span><b class="amber">18%</b></div><div class="row"><span>High Risk</span><b class="red">4%</b></div></div>
-</div></section>
 
-<section id="map" class="page"><div class="card"><div class="section-head"><div><h2>VIGNAN UNIVERSITY CAMPUS MAP</h2><div class="muted">Stylized prototype map · simulated live security overlay</div></div><span class="badge">LIVE SECURITY OVERLAY</span></div><div class="map"><div class="road r1"></div><div class="road r2"></div><div class="building" style="left:27%;top:18%">Academic Block</div><div class="building" style="left:57%;top:12%">Hostels</div><div class="building" style="left:25%;bottom:18%">Library</div><div class="building" style="right:10%;bottom:18%">Academic Buildings</div><div class="marker m1">● University Gate</div><div class="marker m2">● Lara Gate</div><div class="marker m3">● Library Gate</div></div></div></section>
+<!-- MODAL CONTAINER -->
+<div class="modal" id="modal">
+  <div class="modalbox" id="modalbox"></div>
+</div>
 
-<section id="access" class="page"><div class="card"><div class="section-head"><div><h2>SMART GATE ACCESS CONTROL</h2><div class="muted">Simulated identity, authorization and agentic risk decision</div></div><span class="badge">DEMO / PROTOTYPE</span></div>
-<div class="formgrid"><div class="field"><label>SELECT GATE</label><select id="gate"><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select></div><div class="field"><label>USER TYPE</label><select id="utype"><option>Student</option><option>Faculty</option><option>Parent</option><option>Visitor</option><option>Vendor</option><option>Event Guest</option></select></div><div class="field"><label>PERSON / CREDENTIAL ID</label><input id="pid" value="STU20261245"></div></div><div class="actions" style="margin-top:14px"><button class="btn" onclick="validId()">Simulate Valid ID</button><button class="btn danger" onclick="invalidId()">Simulate Invalid ID</button><button class="btn primary" onclick="verify()">SCAN / VERIFY ACCESS</button></div>
-<div class="pipeline" id="pipeline"></div><div id="accessResult"></div></div></section>
+<!-- TOAST MESSAGE -->
+<div class="toast" id="toast"></div>
 
-<section id="visitors" class="page"><div class="card"><div class="section-head"><div><h2>VISITOR MANAGEMENT</h2><div class="muted">Visitor registration and simulated QR access workflow</div></div><span class="badge">DEMO DATA</span></div><div class="formgrid"><div class="field"><label>VISITOR NAME</label><input id="vname" placeholder="Visitor name"></div><div class="field"><label>MOBILE NUMBER</label><input id="vmobile" placeholder="10-digit mobile"></div><div class="field"><label>PURPOSE</label><input id="purpose" placeholder="Meeting / Event / Delivery"></div><div class="field"><label>HOST NAME</label><input id="host" placeholder="Host name"></div><div class="field"><label>DATE</label><input id="vdate" type="date"></div><div class="field"><label>TIME</label><input id="vtime" type="time"></div><div class="field"><label>PREFERRED GATE</label><select id="vgate"><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select></div></div><button class="btn primary" style="margin-top:15px" onclick="registerVisitor()">REGISTER VISITOR</button>
-<div class="section"><h2>Visitor Workflow</h2><div class="pipeline"><div class="agent">Visitor<br><small>Registration</small></div><div class="agent">Host Approval<br><small>Approval</small></div><div class="agent">QR Pass<br><small>Generated</small></div><div class="agent">Gate Verification<br><small>Scan</small></div><div class="agent">AI Decision<br><small>Access</small></div></div></div></div></section>
-
-<section id="agents" class="page"><div class="card"><div class="section-head"><div><h2>AGENTIC AI SECURITY ENGINE</h2><div class="muted">Six coordinated agents for access decisions</div></div><button class="btn primary" onclick="runAgents()">RUN AGENT ANALYSIS</button></div><div class="device-grid" id="agentsGrid"></div></div></section>
-
-<section id="logs" class="page"><div class="card"><div class="section-head"><div><h2>LIVE ACCESS LOGS</h2><div class="muted">Simulated Vignan University access records</div></div><button class="btn" onclick="exportLogs()">EXPORT LOGS</button></div><div class="filters"><select id="fgate" onchange="renderLogs()"><option>All Gates</option><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select><select id="ftype" onchange="renderLogs()"><option>All Types</option><option>Student</option><option>Faculty</option><option>Visitor</option></select><select id="frisk" onchange="renderLogs()"><option>All Risk</option><option>LOW</option><option>MEDIUM</option><option>HIGH</option></select><select id="fdecision" onchange="renderLogs()"><option>All Decisions</option><option>GRANTED</option><option>DENIED</option><option>MANUAL REVIEW</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>Timestamp</th><th>Person ID</th><th>Name</th><th>User Type</th><th>Gate</th><th>Risk</th><th>Decision</th><th>Method</th></tr></thead><tbody id="logbody"></tbody></table></div></div></section>
-
-<section id="iot" class="page"><div class="card"><div class="section-head"><div><h2>IoT DEVICE MONITORING</h2><div class="muted">Simulated hardware data · future ESP32 integration ready</div></div><button class="btn primary" onclick="simulateDevice()">SIMULATE DEVICE EVENT</button></div><div class="device-grid" id="devices"></div><div class="section card" style="margin-top:18px"><h2>Future IoT Deployment Architecture</h2><div class="pipeline"><div class="agent">RFID RC522</div><div class="agent">ESP32</div><div class="agent">Wi-Fi</div><div class="agent">Backend / Firebase</div><div class="agent">AI Risk Engine</div><div class="agent">Website Dashboard</div><div class="agent">Gate Controller</div></div><div class="muted">Physical hardware is not connected in this prototype. The frontend simulates device events and state changes.</div></div></div></section>
-
-<section id="alerts" class="page"><div class="card"><div class="section-head"><div><h2>SECURITY ALERT CENTER</h2><div class="muted">High-risk and operational events</div></div><span class="badge">LIVE</span></div><div id="alertsList"></div></div></section>
-<div class="footer">VIGNAN SMART ACCESS · Student project prototype · All identities, IoT events and AI decisions are simulated demonstration data unless explicitly connected to authorized systems.</div>
-</main></div>
-<div class="modal" id="modal"><div class="modalbox" id="modalbox"></div></div><div class="toast" id="toast"></div>
 <script>
-const gates=[
-{name:"University Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"CLOSED",entries:1284,risk:"LOW",image:"https://vignan.ac.in/newvignan/assets/images/aboutus_img9.jpg",imageLabel:"VIGNAN CAMPUS REFERENCE"},
-{name:"Lara Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"CLOSED",entries:936,risk:"MEDIUM",image:"https://image-static.collegedunia.com/public/reviewPhotos/341724/IMG-20230201-WA0008.jpg",imageLabel:"LARA CAMPUS REFERENCE"},
-{name:"Library Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"LOCKED",entries:626,risk:"LOW",image:"https://vignan.ac.in/newvignan/assets/images/about_img1.jpeg",imageLabel:"NTR VIGNAN LIBRARY REFERENCE"}];
-let logs=[
-["08:41:23","STU20261245","Rahul Kumar","Student","University Gate","LOW","GRANTED","RFID"],
-["08:39:14","FAC10421","Dr. Priya Rao","Faculty","Lara Gate","LOW","GRANTED","RFID"],
-["08:35:02","VIS-DEMO-018","Unknown Visitor","Visitor","Lara Gate","HIGH","DENIED","Manual"],
-["08:31:45","STU20261082","Ananya Reddy","Student","Library Gate","LOW","GRANTED","RFID"]];
-let alerts=[
-{severity:"HIGH",gate:"Lara Gate",user:"Unknown Visitor",reason:"Invalid credential + no authorization",action:"Manual verification required",status:"ACTIVE"},
-{severity:"MEDIUM",gate:"University Gate",user:"STU-DEMO-041",reason:"Multiple rapid entry attempts",action:"Review access pattern",status:"ACTIVE"},
-{severity:"HIGH",gate:"Library Gate",user:"VIS-DEMO-021",reason:"Multiple failed RFID scans",action:"Manual verification required",status:"ACTIVE"}];
-const agentNames=[["Identity Agent","Checks identity and credentials."],["Authorization Agent","Verifies entry permission."],["Risk Agent","Evaluates risk indicators."],["Anomaly Agent","Identifies unusual access patterns."],["Policy Agent","Recommends Fast / Standard / Manual action."],["Notification Agent","Alerts security personnel when required."]];
-let devices=[
-["ESP32-UG-001","ESP32 Controller","University Gate","ONLINE",94],["RFID-UG-001","RFID Reader","University Gate","ONLINE",91],["CAM-UG-001","Camera","University Gate","ONLINE",89],["BAR-UG-001","Barrier","University Gate","ONLINE",96],
-["ESP32-LG-001","ESP32 Controller","Lara Gate","ONLINE",87],["RFID-LG-001","RFID Reader","Lara Gate","ONLINE",84],["CAM-LG-001","Camera","Lara Gate","ONLINE",82],["BAR-LG-001","Barrier","Lara Gate","ONLINE",90],
-["ESP32-LIB-001","ESP32 Controller","Library Gate","ONLINE",92],["RFID-LIB-001","RFID Reader","Library Gate","ONLINE",88],["CAM-LIB-001","Camera","Library Gate","ONLINE",86],["DOOR-LIB-001","Door Sensor","Library Gate","ONLINE",93]];
+// ==========================================
+// AUDIO SYNTHESIZER (WEB AUDIO API)
+// ==========================================
+let soundEnabled = true;
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2600)}
-document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active")});
-function renderGates(){document.getElementById("gateCards").innerHTML=gates.map((g,i)=>`<div class="card"><div class="gate-img"><img src="${g.image}" alt="${g.name} reference image" loading="lazy"><span class="gate-image-label">${g.imageLabel}</span></div><div class="gate-title">${g.name}</div><div class="row"><span>Status</span><b class="green">${g.status}</b></div><div class="row"><span>RFID Reader</span><b class="green">${g.rfid}</b></div><div class="row"><span>Camera</span><b class="green">${g.camera}</b></div><div class="row"><span>Barrier / Door</span><b>${g.barrier}</b></div><div class="row"><span>Today's Entries</span><b>${g.entries.toLocaleString()}</b></div><div class="row"><span>Current Risk</span><span class="pill ${g.risk==="HIGH"?"danger":g.risk==="MEDIUM"?"warn":""}">${g.risk}</span></div><button class="btn" onclick="showGate(${i})">VIEW GATE</button></div>`).join("")}
-function renderActivity(){document.getElementById("activity").innerHTML=logs.slice(0,7).map(l=>`<div class="event"><span class="time">${l[0]}</span><strong>${l[2]} · ${l[6]}</strong><span class="muted">${l[1]} · ${l[3]} · ${l[4]} · ${l[5]} risk</span></div>`).join("")}
-function renderLogs(){let a=document.getElementById("fgate").value,b=document.getElementById("ftype").value,c=document.getElementById("frisk").value,d=document.getElementById("fdecision").value;let rows=logs.filter(x=>(a==="All Gates"||x[4]===a)&&(b==="All Types"||x[3]===b)&&(c==="All Risk"||x[5]===c)&&(d==="All Decisions"||x[6]===d));document.getElementById("logbody").innerHTML=rows.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td class="${x[5]==="HIGH"?"red":x[5]==="MEDIUM"?"amber":"green"}">${x[5]}</td><td>${x[6]}</td><td>${x[7]}</td></tr>`).join("")}
-function renderAgents(){document.getElementById("agentsGrid").innerHTML=agentNames.map((a,i)=>`<div class="device agent-card" id="agent${i}"><h3>✦ ${a[0]}</h3><div class="pill">ACTIVE</div><p class="muted" style="font-size:11px">${a[1]}</p><small id="agentAct${i}">Latest activity: Monitoring</small></div>`).join("")}
-function renderDevices(){document.getElementById("devices").innerHTML=devices.map((d,i)=>`<div class="device"><h3>${d[1]}</h3><div class="row"><span>Gate</span><b>${d[2]}</b></div><div class="row"><span>Status</span><b class="${d[3]==="ONLINE"?"green":"red"}">${d[3]}</b></div><div class="row"><span>Signal</span><b>${d[4]}%</b></div><div class="row"><span>Device ID</span><span>${d[0]}</span></div><div class="row"><span>Last Update</span><span>${Math.floor(Math.random()*8)+1}s ago</span></div><button class="btn" onclick="toggleDevice(${i})">${d[3]==="ONLINE"?"Turn Offline":"Turn Online"}</button></div>`).join("")}
-function renderAlerts(){document.getElementById("alertsList").innerHTML=alerts.map((a,i)=>`<div class="card" style="margin:10px 0;border-left:4px solid ${a.severity==="HIGH"?"var(--red)":"var(--amber)"}"><div class="row"><b class="${a.severity==="HIGH"?"red":"amber"}">${a.severity} RISK ALERT</b><span class="pill ${a.status==="ACTIVE"?"danger":""}">${a.status}</span></div><div class="row"><span>Gate</span><b>${a.gate}</b></div><div class="row"><span>User</span><b>${a.user}</b></div><div class="row"><span>Reason</span><span>${a.reason}</span></div><div class="row"><span>Action</span><span>${a.action}</span></div><div class="actions"><button class="btn" onclick="showAlert(${i})">VIEW DETAILS</button><button class="btn" onclick="toast('Security officer assigned to alert')">ASSIGN SECURITY OFFICER</button><button class="btn primary" onclick="resolveAlert(${i})">RESOLVE ALERT</button></div></div>`).join("");document.getElementById("alertCount").textContent=alerts.filter(a=>a.status==="ACTIVE").length}
-function showGate(i){let g=gates[i];document.getElementById("modalbox").innerHTML=`<h2>${g.name}</h2><p class="muted">Simulated gate control panel</p><div class="row"><span>Status</span><b class="green">${g.status}</b></div><div class="row"><span>Risk</span><b>${g.risk}</b></div><div class="row"><span>Today's Entries</span><b>${g.entries}</b></div><div class="row"><span>RFID</span><b>${g.rfid}</b></div><div class="row"><span>Camera</span><b>${g.camera}</b></div><div class="row"><span>Barrier/Door</span><b>${g.barrier}</b></div><div class="actions"><button class="btn primary" onclick="toast('Access scanner opened for ${g.name}')">SCAN ACCESS</button><button class="btn" onclick="toast('Barrier action simulated')">OPEN BARRIER — SIMULATED</button><button class="btn" onclick="closeModal()">CLOSE</button></div>`;document.getElementById("modal").classList.add("show")}
-function showAlert(i){let a=alerts[i];document.getElementById("modalbox").innerHTML=`<h2 class="red">${a.severity} RISK ALERT</h2><p><b>${a.gate}</b> · ${a.user}</p><p class="muted">${a.reason}</p><p>${a.action}</p><button class="btn primary" onclick="resolveAlert(${i});closeModal()">RESOLVE ALERT</button> <button class="btn" onclick="closeModal()">CLOSE</button>`;document.getElementById("modal").classList.add("show")}
-function closeModal(){document.getElementById("modal").classList.remove("show")}
-function validId(){document.getElementById("pid").value="STU20261245";document.getElementById("utype").value="Student";toast("Valid demo credential loaded")}
-function invalidId(){document.getElementById("pid").value="VIS-UNKNOWN";document.getElementById("utype").value="Visitor";toast("Suspicious demo credential loaded")}
-function verify(){let id=document.getElementById("pid").value.trim(),gate=document.getElementById("gate").value,type=document.getElementById("utype").value,valid=id==="STU20261245"||id==="FAC10421";let names={"STU20261245":"Rahul Kumar","FAC10421":"Dr. Priya Rao"};let steps=["Identity Agent","Authorization Agent","Risk Agent","Anomaly Agent","Policy Agent","Notification Agent"];let p=document.getElementById("pipeline");p.innerHTML=steps.map((s,i)=>`<div class="agent" id="vp${i}"><b>${s}</b><br><small>Waiting...</small></div>`).join("");document.getElementById("accessResult").innerHTML="";steps.forEach((s,i)=>setTimeout(()=>{document.getElementById("vp"+i).classList.add("active");document.getElementById("vp"+i).querySelector("small").textContent="Completed";},i*550));setTimeout(()=>{let risk=valid?"LOW":"HIGH",decision=valid?"GRANTED":"MANUAL REVIEW";logs.unshift([new Date().toLocaleTimeString()," "+id,names[id]||"Unknown Visitor",type,gate,risk,decision,valid?"RFID":"Manual"]);if(!valid){alerts.unshift({severity:"HIGH",gate,user:"Unknown Visitor",reason:"Invalid credential + no authorization",action:"Manual verification required",status:"ACTIVE"});toast("High-risk alert created");}else toast("ACCESS GRANTED — gate action simulated");renderAll();document.getElementById("accessResult").innerHTML=`<div class="result"><div class="${valid?"green":"red"}">FINAL DECISION</div><h1 class="${valid?"green":"red"}">${valid?"ACCESS GRANTED":"ACCESS DENIED / MANUAL VERIFICATION"}</h1><div class="row"><span>Identity</span><b>${valid?"VERIFIED":"FAILED / UNKNOWN"}</b></div><div class="row"><span>Authorization</span><b>${valid?"AUTHORIZED":"NOT AUTHORIZED"}</b></div><div class="row"><span>Risk</span><b class="${valid?"green":"red"}">${risk}</b></div><div class="row"><span>Anomaly</span><b>${valid?"NONE DETECTED":"DETECTED"}</b></div><div class="row"><span>Policy</span><b>${valid?"FAST LANE":"MANUAL REVIEW"}</b></div></div>`},3600)}
-function runAgents(){agentNames.forEach((_,i)=>{setTimeout(()=>{document.getElementById("agent"+i).classList.add("active");document.getElementById("agentAct"+i).textContent="Latest activity: Analysis completed";},i*500)});toast("Agentic analysis running")}
-function registerVisitor(){let n=document.getElementById("vname").value||"Demo Visitor",g=document.getElementById("vgate").value,id="VIS-DEMO-"+String(Math.floor(Math.random()*900)+100);document.getElementById("modalbox").innerHTML=`<div style="text-align:center"><div class="eyebrow">SIMULATED QR VISITOR PASS</div><h2>${n}</h2><div class="qr"></div><p>${id}</p><p class="muted">${g} · ${document.getElementById("purpose").value||"Campus visit"}</p><p>Visitor → Registration → Host Approval → QR Pass → Gate Verification → Access Decision</p><button class="btn primary" onclick="toast('Visitor pass ready');closeModal()">DOWNLOAD PASS</button> <button class="btn" onclick="closeModal()">CLOSE</button></div>`;document.getElementById("modal").classList.add("show")}
-function toggleDevice(i){devices[i][3]=devices[i][3]==="ONLINE"?"OFFLINE":"ONLINE";let gate=devices[i][2];if(devices[i][3]==="OFFLINE"){alerts.unshift({severity:"MEDIUM",gate,user:"IoT System",reason:`${devices[i][1]} ${devices[i][0]} went offline`,action:"Inspect device connectivity",status:"ACTIVE"});toast("Device offline alert created")}renderAll()}
-function simulateDevice(){let i=Math.floor(Math.random()*devices.length);devices[i][3]=devices[i][3]==="ONLINE"?"OFFLINE":"ONLINE";if(devices[i][3]==="OFFLINE")alerts.unshift({severity:"HIGH",gate:devices[i][2],user:"IoT System",reason:"Simulated high-risk device event",action:"Manual verification required",status:"ACTIVE"});logs.unshift([new Date().toLocaleTimeString(),devices[i][0],"IoT Device","Event Guest",devices[i][2],"HIGH","MANUAL REVIEW","IoT"]);toast("Simulated IoT event triggered");renderAll()}
-function resolveAlert(i){alerts[i].status="RESOLVED";toast("Alert resolved");renderAll()}
-function exportLogs(){let csv=["Timestamp,Person ID,Name,User Type,Gate,Risk,Decision,Method",...logs.map(x=>x.join(","))].join("\\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="vignan-smart-access-logs.csv";a.click()}
-function runDemo(){document.querySelector('[data-page="access"]').click();validId();verify();toast("Full access-control demo started")}
-function renderAll(){renderGates();renderActivity();renderLogs();renderAgents();renderDevices();renderAlerts()}
+function playTone(freq, type, duration, delay = 0) {
+  if (!soundEnabled) return;
+  setTimeout(() => {
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e) {}
+  }, delay);
+}
+
+function playGrantedSound() {
+  playTone(523.25, 'sine', 0.12, 0);   // C5
+  playTone(659.25, 'sine', 0.12, 100); // E5
+  playTone(783.99, 'sine', 0.25, 200); // G5
+}
+
+function playDeniedSound() {
+  playTone(220, 'sawtooth', 0.18, 0);  // Low buzzer
+  playTone(196, 'sawtooth', 0.25, 150);
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundToggle').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Muted';
+  toast(soundEnabled ? 'Audio cues enabled' : 'Audio cues muted');
+}
+
+// ==========================================
+// DATA STORE
+// ==========================================
+const gates = [
+  {
+    name: "University Gate",
+    status: "ONLINE",
+    rfid: "ONLINE",
+    camera: "ONLINE",
+    barrier: "CLOSED",
+    entries: 1284,
+    risk: "LOW",
+    image: "https://vignan.ac.in/newvignan/assets/images/aboutus_img9.jpg",
+    imageLabel: "VIGNAN CAMPUS REFERENCE"
+  },
+  {
+    name: "Lara Gate",
+    status: "ONLINE",
+    rfid: "ONLINE",
+    camera: "ONLINE",
+    barrier: "CLOSED",
+    entries: 936,
+    risk: "MEDIUM",
+    image: "https://image-static.collegedunia.com/public/reviewPhotos/341724/IMG-20230201-WA0008.jpg",
+    imageLabel: "LARA CAMPUS REFERENCE"
+  },
+  {
+    name: "Library Gate",
+    status: "ONLINE",
+    rfid: "ONLINE",
+    camera: "ONLINE",
+    barrier: "LOCKED",
+    entries: 626,
+    risk: "LOW",
+    image: "https://vignan.ac.in/newvignan/assets/images/about_img1.jpeg",
+    imageLabel: "NTR VIGNAN LIBRARY REFERENCE"
+  }
+];
+
+let logs = [
+  ["08:41:23", "STU20261245", "Rahul Kumar", "Student", "University Gate", "LOW", "GRANTED", "RFID"],
+  ["08:39:14", "FAC10421", "Dr. Priya Rao", "Faculty", "Lara Gate", "LOW", "GRANTED", "RFID"],
+  ["08:35:02", "VIS-DEMO-018", "Unknown Visitor", "Visitor", "Lara Gate", "HIGH", "DENIED", "Manual"],
+  ["08:31:45", "STU20261082", "Ananya Reddy", "Student", "Library Gate", "LOW", "GRANTED", "RFID"],
+  ["08:28:10", "STU20261199", "K. Teja", "Student", "University Gate", "LOW", "GRANTED", "RFID"],
+  ["08:24:55", "VEND-882", "Swiggy Delivery", "Vendor", "University Gate", "LOW", "GRANTED", "QR Pass"],
+  ["08:19:12", "STU20261304", "M. Sandeep", "Student", "Library Gate", "LOW", "GRANTED", "RFID"]
+];
+
+let alerts = [
+  { id: 1, severity: "HIGH", gate: "Lara Gate", user: "Unknown Visitor", reason: "Invalid credential + no host authorization", action: "Manual verification required", status: "ACTIVE", assigned: "Unassigned", time: "08:35:02" },
+  { id: 2, severity: "MEDIUM", gate: "University Gate", user: "STU-DEMO-041", reason: "Multiple rapid entry attempts (Anti-passback warning)", action: "Review access pattern", status: "ACTIVE", assigned: "Unassigned", time: "08:30:19" },
+  { id: 3, severity: "HIGH", gate: "Library Gate", user: "VIS-DEMO-021", reason: "Failed RFID scans + expired temporary pass", action: "Security officer dispatched", status: "ACTIVE", assigned: "Officer K. Sharma", time: "08:22:45" }
+];
+
+const agentMetadata = [
+  { name: "Identity Agent", desc: "Validates RFID UID and Person ID against institutional registry.", processed: 2846, rate: "99.8%" },
+  { name: "Authorization Agent", desc: "Verifies role-based access windows, hostel curfew & gate policies.", processed: 2846, rate: "99.4%" },
+  { name: "Risk Agent", desc: "Computes multi-factor risk scores (Low: 78%, Medium: 18%, High: 4%).", processed: 2846, rate: "100%" },
+  { name: "Anomaly Agent", desc: "Detects card sharing, anti-passback violations, and rapid-tap anomalies.", processed: 2846, rate: "99.9%" },
+  { name: "Policy Agent", desc: "Enforces routing decisions: Fast Lane Barrier Open, Standard, or Deny.", processed: 2846, rate: "100%" },
+  { name: "Notification Agent", desc: "Dispatches real-time security alerts to officers and the dashboard.", processed: 14, rate: "100%" }
+];
+
+let devices = [
+  ["ESP32-UG-001", "ESP32 Controller", "University Gate", "ONLINE", 94],
+  ["RFID-UG-001", "RFID Reader", "University Gate", "ONLINE", 91],
+  ["CAM-UG-001", "Camera", "University Gate", "ONLINE", 89],
+  ["BAR-UG-001", "Barrier Relay", "University Gate", "ONLINE", 96],
+  ["ESP32-LG-001", "ESP32 Controller", "Lara Gate", "ONLINE", 87],
+  ["RFID-LG-001", "RFID Reader", "Lara Gate", "ONLINE", 84],
+  ["CAM-LG-001", "Camera", "Lara Gate", "ONLINE", 82],
+  ["BAR-LG-001", "Barrier Relay", "Lara Gate", "ONLINE", 90],
+  ["ESP32-LIB-001", "ESP32 Controller", "Library Gate", "ONLINE", 92],
+  ["RFID-LIB-001", "RFID Reader", "Library Gate", "ONLINE", 88],
+  ["CAM-LIB-001", "Camera", "Library Gate", "ONLINE", 86],
+  ["DOOR-LIB-001", "Door Strike", "Library Gate", "ONLINE", 93]
+];
+
+// ==========================================
+// TOAST & NAVIGATION
+// ==========================================
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(t.timer);
+  t.timer = setTimeout(() => t.style.display = "none", 2800);
+}
+
+document.querySelectorAll(".nav button").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(btn.dataset.page).classList.add("active");
+  };
+});
+
+// ==========================================
+// RENDERERS
+// ==========================================
+function renderGates() {
+  document.getElementById("gateCards").innerHTML = gates.map((g, i) => `
+    <div class="card">
+      <div class="gate-img">
+        <img src="${g.image}" alt="${g.name} reference" loading="lazy">
+        <span class="gate-image-label">${g.imageLabel}</span>
+      </div>
+      <div class="gate-title">${g.name}</div>
+      <div class="row"><span>Status</span><b class="green">${g.status}</b></div>
+      <div class="row"><span>RFID Reader</span><b class="green">${g.rfid}</b></div>
+      <div class="row"><span>Camera / Optical</span><b class="green">${g.camera}</b></div>
+      <div class="row"><span>Barrier State</span><b>${g.barrier}</b></div>
+      <div class="row"><span>Today's Entries</span><b>${g.entries.toLocaleString()}</b></div>
+      <div class="row"><span>Risk Rating</span><span class="pill ${g.risk==='HIGH'?'danger':g.risk==='MEDIUM'?'warn':''}">${g.risk}</span></div>
+      <button class="btn" style="width:100%; margin-top:12px;" onclick="showGate(${i})">INSPECT GATE</button>
+    </div>
+  `).join("");
+}
+
+function renderActivity() {
+  document.getElementById("activity").innerHTML = logs.slice(0, 8).map(l => `
+    <div class="event">
+      <span class="time">${l[0]}</span>
+      <strong>${l[2]} · ${l[6]}</strong>
+      <span class="muted">${l[1]} · ${l[3]} · ${l[4]} · <span class="${l[5]==='HIGH'?'red':l[5]==='MEDIUM'?'amber':'green'}">${l[5]} Risk</span></span>
+    </div>
+  `).join("");
+}
+
+function renderLogs() {
+  const query = (document.getElementById("searchQuery")?.value || "").toLowerCase();
+  const fGate = document.getElementById("fgate").value;
+  const fType = document.getElementById("ftype").value;
+  const fRisk = document.getElementById("frisk").value;
+  const fDecision = document.getElementById("fdecision").value;
+
+  const filtered = logs.filter(r => {
+    const matchesSearch = !query || r[1].toLowerCase().includes(query) || r[2].toLowerCase().includes(query);
+    const matchesGate = fGate === "All Gates" || r[4] === fGate;
+    const matchesType = fType === "All Types" || r[3] === fType;
+    const matchesRisk = fRisk === "All Risk" || r[5] === fRisk;
+    const matchesDecision = fDecision === "All Decisions" || r[6] === fDecision;
+    return matchesSearch && matchesGate && matchesType && matchesRisk && matchesDecision;
+  });
+
+  document.getElementById("logbody").innerHTML = filtered.map(x => `
+    <tr>
+      <td style="font-family:'JetBrains Mono',monospace;">${x[0]}</td>
+      <td><b>${x[1]}</b></td>
+      <td>${x[2]}</td>
+      <td>${x[3]}</td>
+      <td>${x[4]}</td>
+      <td><span class="pill ${x[5]==='HIGH'?'danger':x[5]==='MEDIUM'?'warn':''}">${x[5]}</span></td>
+      <td><b class="${x[6]==='GRANTED'?'green':x[6]==='DENIED'?'red':'amber'}">${x[6]}</b></td>
+      <td>${x[7]}</td>
+    </tr>
+  `).join("");
+}
+
+function renderAgents() {
+  document.getElementById("agentsGrid").innerHTML = agentMetadata.map((a, i) => `
+    <div class="device" id="agentCard${i}">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3>✦ ${a.name}</h3>
+        <span class="pill">ACTIVE</span>
+      </div>
+      <p class="muted" style="font-size:12px; min-height:36px;">${a.desc}</p>
+      <div class="row"><span>Transactions Analyzed</span><b>${a.processed.toLocaleString()}</b></div>
+      <div class="row"><span>Decision Confidence</span><b class="green">${a.rate}</b></div>
+      <div class="row"><span>State</span><span id="agentStatus${i}" style="color:var(--blue); font-weight:700;">Idle Monitoring</span></div>
+    </div>
+  `).join("");
+}
+
+function renderDevices() {
+  document.getElementById("devices").innerHTML = devices.map((d, i) => `
+    <div class="device">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h3>${d[1]}</h3>
+        <span class="pill ${d[3]==='ONLINE'?'':'danger'}">${d[3]}</span>
+      </div>
+      <div class="row"><span>Gate Assignment</span><b>${d[2]}</b></div>
+      <div class="row"><span>Signal Quality</span><b>${d[4]}% Wi-Fi</b></div>
+      <div class="row"><span>Device MAC / UID</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px;">${d[0]}</span></div>
+      <div class="row"><span>Heartbeat</span><span>${Math.floor(Math.random()*4)+1}s ago</span></div>
+      <button class="btn sm" style="width:100%; margin-top:10px;" onclick="toggleDevice(${i})">
+        ${d[3]==='ONLINE'?'Simulate Disconnect':'Re-connect Device'}
+      </button>
+    </div>
+  `).join("");
+}
+
+function renderAlerts() {
+  const activeAlerts = alerts.filter(a => a.status === "ACTIVE");
+  document.getElementById("alertCount").textContent = activeAlerts.length;
+  document.getElementById("activeAlertBadge").textContent = `${activeAlerts.length} ACTIVE ALERTS`;
+
+  document.getElementById("alertsList").innerHTML = alerts.map((a, i) => `
+    <div class="card" style="margin: 12px 0; border-left: 5px solid ${a.status==='RESOLVED'?'#24a66f':a.severity==='HIGH'?'var(--red)':'var(--amber)'};">
+      <div class="row">
+        <b class="${a.status==='RESOLVED'?'green':a.severity==='HIGH'?'red':'amber'}">${a.severity} RISK ALERT</b>
+        <span class="pill ${a.status==='ACTIVE'?'danger':''}">${a.status}</span>
+      </div>
+      <div class="row"><span>Incident Location</span><b>${a.gate}</b></div>
+      <div class="row"><span>Subject Credential</span><b>${a.user}</b></div>
+      <div class="row"><span>Trigger Reason</span><span>${a.reason}</span></div>
+      <div class="row"><span>Required Action</span><span>${a.action}</span></div>
+      <div class="row"><span>Assigned Officer</span><b style="color:var(--blue);">${a.assigned}</b></div>
+      <div class="actions" style="margin-top:12px; display:flex; gap:8px;">
+        ${a.status==='ACTIVE' ? `
+          <button class="btn sm" onclick="assignOfficer(${i})">Assign Security Officer</button>
+          <button class="btn sm primary" onclick="resolveAlert(${i})">Resolve Incident</button>
+        ` : `
+          <span class="muted" style="font-size:12px;">Resolved · Audit Trail Updated</span>
+        `}
+      </div>
+    </div>
+  `).join("");
+}
+
+// ==========================================
+// TEST PROFILES FOR ACCESS CONTROL
+// ==========================================
+function loadProfile(type) {
+  if (type === 'student') {
+    document.getElementById("pid").value = "STU20261245";
+    document.getElementById("utype").value = "Student";
+    document.getElementById("gate").value = "University Gate";
+    toast("Loaded Rahul Kumar (Valid Student)");
+  } else if (type === 'faculty') {
+    document.getElementById("pid").value = "FAC10421";
+    document.getElementById("utype").value = "Faculty";
+    document.getElementById("gate").value = "Lara Gate";
+    toast("Loaded Dr. Priya Rao (Faculty Profile)");
+  } else if (type === 'invalid') {
+    document.getElementById("pid").value = "SUSP-UNREG-99";
+    document.getElementById("utype").value = "Visitor";
+    document.getElementById("gate").value = "Library Gate";
+    toast("Loaded Suspicious Unregistered Credential");
+  } else if (type === 'passback') {
+    document.getElementById("pid").value = "STU20261082";
+    document.getElementById("utype").value = "Student";
+    document.getElementById("gate").value = "University Gate";
+    toast("Loaded Anti-Passback Scenario (Duplicate Scan)");
+  }
+}
+
+// ==========================================
+// 6-AGENT ACCESS VERIFICATION PIPELINE
+// ==========================================
+function verifyAccess() {
+  const id = document.getElementById("pid").value.trim();
+  const gate = document.getElementById("gate").value;
+  const type = document.getElementById("utype").value;
+
+  const barrierArm = document.getElementById("barrierArm");
+  const barrierLed = document.getElementById("barrierLed");
+  const barrierStateText = document.getElementById("barrierStateText");
+  const relayStateText = document.getElementById("relayStateText");
+
+  // Reset Barrier state
+  barrierArm.classList.remove("open");
+  barrierLed.classList.remove("green");
+  barrierStateText.textContent = "CLOSED / FAIL-SECURE";
+  barrierStateText.style.color = "#ff8595";
+  relayStateText.textContent = "GPIO 26: LOW";
+
+  const valid = id === "STU20261245" || id === "FAC10421";
+  const isPassback = id === "STU20261082";
+  const names = {
+    "STU20261245": "Rahul Kumar",
+    "FAC10421": "Dr. Priya Rao",
+    "STU20261082": "Ananya Reddy"
+  };
+
+  const steps = [
+    { name: "Identity Agent", desc: "Checking UID in registry..." },
+    { name: "Authorization Agent", desc: "Verifying permissions..." },
+    { name: "Risk Agent", desc: "Calculating multi-factor risk..." },
+    { name: "Anomaly Agent", desc: "Evaluating anti-passback..." },
+    { name: "Policy Agent", desc: "Formulating access routing..." },
+    { name: "Notification Agent", desc: "Updating audit stream..." }
+  ];
+
+  const p = document.getElementById("pipeline");
+  p.innerHTML = steps.map((s, i) => `
+    <div class="agent-step" id="vp${i}">
+      <b>${s.name}</b>
+      <small>${s.desc}</small>
+    </div>
+  `).join("");
+  document.getElementById("accessResult").innerHTML = "";
+
+  steps.forEach((s, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(`vp${i}`);
+      if (el) {
+        el.classList.add("active");
+        el.querySelector("small").textContent = "Completed (✓)";
+      }
+    }, (i + 1) * 350);
+  });
+
+  setTimeout(() => {
+    let risk = valid ? "LOW" : "HIGH";
+    let decision = valid ? "GRANTED" : "DENIED";
+
+    if (isPassback) {
+      risk = "HIGH";
+      decision = "MANUAL REVIEW";
+    }
+
+    if (valid) {
+      playGrantedSound();
+      barrierArm.classList.add("open");
+      barrierLed.classList.add("green");
+      barrierStateText.textContent = "OPEN / FAST LANE ACTUATED";
+      barrierStateText.style.color = "#24a66f";
+      relayStateText.textContent = "GPIO 26: HIGH (Relay Energized)";
+      toast("ACCESS GRANTED — Barrier Opened!");
+
+      // Update total entries
+      const entEl = document.getElementById("totalEntries");
+      entEl.textContent = (parseInt(entEl.textContent.replace(/,/g, '')) + 1).toLocaleString();
+    } else {
+      playDeniedSound();
+      toast("ACCESS DENIED — High Risk Triggered");
+      alerts.unshift({
+        id: alerts.length + 1,
+        severity: "HIGH",
+        gate: gate,
+        user: names[id] || "Unknown Visitor",
+        reason: isPassback ? "Anti-Passback duplicate scan without recorded exit" : "Invalid credential UID + unauthorized gate entry",
+        action: "Officer dispatched for manual verification",
+        status: "ACTIVE",
+        assigned: "Unassigned",
+        time: new Date().toLocaleTimeString()
+      });
+    }
+
+    // Append to live logs
+    logs.unshift([
+      new Date().toLocaleTimeString(),
+      id,
+      names[id] || "Suspicious Credential",
+      type,
+      gate,
+      risk,
+      decision,
+      valid ? "RFID" : "Manual"
+    ]);
+
+    renderAll();
+
+    document.getElementById("accessResult").innerHTML = `
+      <div class="result" style="border-color:${valid?'#24a66f':'#df2633'}">
+        <div class="eyebrow" style="color:${valid?'var(--green)':'var(--red)'}">FINAL MULTI-AGENT CLEARANCE DECISION</div>
+        <h1 class="${valid?'green':'red'}">${valid?'ACCESS GRANTED — FAST LANE':'ACCESS DENIED — MANUAL REVIEW REQUIRED'}</h1>
+        <div class="row"><span>Person Identity</span><b>${names[id] || 'Unknown / Unverified UID'}</b></div>
+        <div class="row"><span>Authorization Status</span><b>${valid?'AUTHORIZED CLEARANCE':'DENIED / RESTRICTED ROLE'}</b></div>
+        <div class="row"><span>Computed Risk Factor</span><b class="${valid?'green':'red'}">${risk} (${valid?'12% Baseline':'88% Flagged'})</b></div>
+        <div class="row"><span>Anomaly Detection Flag</span><b>${isPassback?'DETECTED: Anti-Passback Duplicate':'CLEAN: No Fraud Found'}</b></div>
+        <div class="row"><span>Policy Output</span><b>${valid?'COMMAND: OPEN_BARRIER (Pulse 3000ms)':'COMMAND: LOCK_GATE & DISPATCH_ALERT'}</b></div>
+      </div>
+    `;
+
+    // Auto-close barrier after 4 seconds if granted
+    if (valid) {
+      setTimeout(() => {
+        barrierArm.classList.remove("open");
+        barrierLed.classList.remove("green");
+        barrierStateText.textContent = "CLOSED / FAIL-SECURE";
+        barrierStateText.style.color = "#ff8595";
+        relayStateText.textContent = "GPIO 26: LOW";
+      }, 4000);
+    }
+  }, (steps.length + 1) * 350);
+}
+
+// ==========================================
+// VISITOR QR CODE GENERATOR (PURE JS SVG)
+// ==========================================
+function generateVisitorPass() {
+  const name = document.getElementById("vname").value.trim() || "Visitor";
+  const mobile = document.getElementById("vmobile").value.trim();
+  const host = document.getElementById("host").value.trim();
+  const purpose = document.getElementById("purpose").value.trim();
+  const gate = document.getElementById("vgate").value;
+  const passId = "VIS-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+  // Generate real deterministic SVG QR Matrix
+  const qrSvg = createSvgQr(passId + "|" + name + "|" + gate);
+
+  document.getElementById("modalbox").innerHTML = `
+    <div style="text-align: center;">
+      <div class="eyebrow">ENCRYPTED DIGITAL QR VISITOR PASS</div>
+      <h2 style="margin: 6px 0 14px; font-size: 22px;">${name}</h2>
+      
+      <div class="visitor-badge">
+        <div class="qr-canvas-holder">
+          ${qrSvg}
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--blue); font-size:15px;">
+          ${passId}
+        </div>
+        <div class="row" style="margin-top:12px;"><span>Host</span><b>${host}</b></div>
+        <div class="row"><span>Purpose</span><b>${purpose}</b></div>
+        <div class="row"><span>Entry Gate</span><b>${gate}</b></div>
+        <div class="row"><span>Validity</span><b class="green">Active (Valid until 18:00 IST)</b></div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center; margin-top: 16px;">
+        <button class="btn primary" onclick="toast('QR Pass saved to device'); closeModal();">📥 Download Badge</button>
+        <button class="btn" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `;
+  document.getElementById("modal").classList.add("show");
+}
+
+// Compact SVG QR Pattern Generator for Authentic Look
+function createSvgQr(data) {
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) hash = (hash << 5) - hash + data.charCodeAt(i);
+  const size = 21; // 21x21 QR Grid
+  let cells = "";
+  
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      // Finder patterns in corners
+      const isCorner1 = r < 7 && c < 7;
+      const isCorner2 = r < 7 && c >= size - 7;
+      const isCorner3 = r >= size - 7 && c < 7;
+      let fill = false;
+
+      if (isCorner1 || isCorner2 || isCorner3) {
+        const ro = isCorner2 ? r : (isCorner3 ? r - (size - 7) : r);
+        const co = isCorner2 ? c - (size - 7) : (isCorner3 ? c : c);
+        if (ro === 0 || ro === 6 || co === 0 || co === 6 || (ro >= 2 && ro <= 4 && co >= 2 && co <= 4)) {
+          fill = true;
+        }
+      } else {
+        // Pseudo-random deterministic bit fill from string hash
+        fill = ((hash ^ (r * 13 + c * 37)) % 3 === 0) || (r % 2 === 0 && c % 3 === 0);
+      }
+
+      if (fill) {
+        cells += `<rect x="${c * 7}" y="${r * 7}" width="7" height="7" fill="#17233b"/>`;
+      }
+    }
+  }
+
+  return `<svg width="150" height="150" viewBox="0 0 147 147" xmlns="http://www.w3.org/2000/svg">${cells}</svg>`;
+}
+
+// ==========================================
+// AGENTS DIAGNOSTICS & TELEMETRY
+// ==========================================
+function runAgentDiagnostics() {
+  agentMetadata.forEach((_, i) => {
+    setTimeout(() => {
+      const card = document.getElementById(`agentCard${i}`);
+      const st = document.getElementById(`agentStatus${i}`);
+      if (card && st) {
+        card.style.borderColor = "var(--blue)";
+        st.textContent = "Telemetry Analysis Complete (0.12ms)";
+        st.style.color = "var(--green)";
+      }
+    }, i * 350);
+  });
+  toast("Running agentic diagnostics cycle across all 6 micro-agents");
+}
+
+// ==========================================
+// IOT & ALERT DISPATCH WORKFLOWS
+// ==========================================
+function toggleDevice(i) {
+  devices[i][3] = devices[i][3] === "ONLINE" ? "OFFLINE" : "ONLINE";
+  const gate = devices[i][2];
+  if (devices[i][3] === "OFFLINE") {
+    alerts.unshift({
+      id: alerts.length + 1,
+      severity: "MEDIUM",
+      gate: gate,
+      user: "Hardware Telemetry",
+      reason: `${devices[i][1]} (${devices[i][0]}) lost network heartbeat`,
+      action: "Inspect gate power supply & Wi-Fi bridge",
+      status: "ACTIVE",
+      assigned: "Unassigned",
+      time: new Date().toLocaleTimeString()
+    });
+    playDeniedSound();
+    toast(`Alert Created: ${devices[i][0]} is OFFLINE`);
+  } else {
+    toast(`${devices[i][0]} restored to ONLINE`);
+  }
+  renderAll();
+}
+
+function simulateDeviceFault() {
+  const i = Math.floor(Math.random() * devices.length);
+  toggleDevice(i);
+}
+
+function assignOfficer(i) {
+  document.getElementById("modalbox").innerHTML = `
+    <h2>Assign Security Officer</h2>
+    <p class="muted">Select on-duty guard for ${alerts[i].gate}</p>
+    <div style="margin: 16px 0;">
+      <select id="officerSelect" style="width:100%; padding:10px; border-radius:8px; border:1px solid #d0deec;">
+        <option>Inspector K. Sharma (Perimeter Lead)</option>
+        <option>Officer M. Ramesh (Patrol Unit 2)</option>
+        <option>Guard S. Venkat (Gate Post)</option>
+      </select>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <button class="btn primary" onclick="confirmAssignment(${i})">Confirm Assignment</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
+    </div>
+  `;
+  document.getElementById("modal").classList.add("show");
+}
+
+function confirmAssignment(i) {
+  const off = document.getElementById("officerSelect").value;
+  alerts[i].assigned = off;
+  closeModal();
+  toast(`Officer assigned: ${off}`);
+  renderAll();
+}
+
+function resolveAlert(i) {
+  alerts[i].status = "RESOLVED";
+  toast("Alert marked as RESOLVED. Audit log updated.");
+  renderAll();
+}
+
+// ==========================================
+// MODAL CONTROLS & DEMO
+// ==========================================
+function showGate(i) {
+  const g = gates[i];
+  document.getElementById("modalbox").innerHTML = `
+    <h2>${g.name}</h2>
+    <p class="muted">Simulated Perimeter Gate Control & Diagnostics</p>
+    <div class="gate-img" style="height:160px; margin-top:12px;">
+      <img src="${g.image}">
+      <span class="gate-image-label">${g.imageLabel}</span>
+    </div>
+    <div class="row"><span>Gate Status</span><b class="green">${g.status}</b></div>
+    <div class="row"><span>RFID Transceiver</span><b class="green">${g.rfid}</b></div>
+    <div class="row"><span>Optical Camera</span><b class="green">${g.camera}</b></div>
+    <div class="row"><span>Barrier State</span><b>${g.barrier}</b></div>
+    <div class="row"><span>Entries Today</span><b>${g.entries.toLocaleString()}</b></div>
+    <div class="row"><span>Current Risk</span><b>${g.risk}</b></div>
+    <div style="display:flex; gap:8px; margin-top:16px;">
+      <button class="btn primary" onclick="testGateAccess('${g.name}')">Simulate Gate Scan</button>
+      <button class="btn" onclick="closeModal()">Close</button>
+    </div>
+  `;
+  document.getElementById("modal").classList.add("show");
+}
+
+function testGateAccess(gateName) {
+  closeModal();
+  document.querySelector('[data-page="access"]').click();
+  document.getElementById("gate").value = gateName;
+  loadProfile('student');
+  verifyAccess();
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+function exportLogs() {
+  const csv = [
+    "Timestamp,Person ID,Full Name,User Type,Gate,Risk,Decision,Method",
+    ...logs.map(x => x.join(","))
+  ].join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "vignan-smart-access-logs.csv";
+  a.click();
+  toast("Logs exported as CSV successfully!");
+}
+
+function runDemo() {
+  document.querySelector('[data-page="access"]').click();
+  loadProfile('student');
+  setTimeout(() => verifyAccess(), 400);
+}
+
+function renderAll() {
+  renderGates();
+  renderActivity();
+  renderLogs();
+  renderAgents();
+  renderDevices();
+  renderAlerts();
+}
+
+// Initial render
 renderAll();
 </script>
 </body>
