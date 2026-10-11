@@ -1,0 +1,37 @@
+[
+  {
+    "uid": "A35F821B",
+    "pid": "STU20261245",
+    "name": "Rahul Kumar",
+    "role": "Student",
+    "auth": true
+  },
+  {
+    "uid": "C48A109E",
+    "pid": "FAC10421",
+    "name": "Dr. Priya Rao",
+    "role": "Faculty",
+    "auth": true
+  },
+  {
+    "uid": "D291FB33",
+    "pid": "STU20261082",
+    "name": "Ananya Reddy",
+    "role": "Student",
+    "auth": true
+  },
+  {
+    "uid": "FF12E844",
+    "pid": "SEC001",
+    "name": "Chief Security Officer",
+    "role": "Security",
+    "auth": true
+  },
+  {
+    "uid": "EE77CA12",
+    "pid": "EMERG001",
+    "name": "Campus Medical Emergency Response",
+    "role": "Emergency",
+    "auth": true
+  }
+]
