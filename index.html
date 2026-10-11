@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VIGNAN SMART ACCESS</title>
+<style>
+:root{--bg:#07111f;--panel:#0d1b2e;--panel2:#10243b;--line:#1d3552;--text:#eaf3ff;--muted:#91a7bf;--blue:#39a7ff;--cyan:#46d9ff;--green:#34d399;--amber:#fbbf24;--red:#fb7185}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 80% 0%,#12365a 0,transparent 35%),var(--bg);color:var(--text)}button,input,select{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:250px;background:rgba(5,15,28,.9);border-right:1px solid var(--line);padding:22px 16px;position:fixed;height:100vh;z-index:5}.brand{font-weight:800;letter-spacing:.5px;font-size:19px}.brand small{display:block;color:var(--cyan);font-size:10px;margin-top:5px;letter-spacing:1.3px}.nav{margin-top:30px}.nav button{display:flex;width:100%;gap:12px;border:0;background:transparent;color:var(--muted);padding:12px 14px;border-radius:10px;margin:4px 0;text-align:left}.nav button.active,.nav button:hover{background:#102842;color:white}.main{margin-left:250px;width:calc(100% - 250px);padding:25px 30px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.eyebrow{color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:1.5px}.title{font-size:27px;font-weight:800;margin:5px 0}.sub{color:var(--muted);font-size:13px}.status{display:flex;gap:10px;align-items:center}.badge{padding:7px 11px;border:1px solid #22527c;background:#0d2740;border-radius:20px;font-size:11px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:linear-gradient(145deg,rgba(16,36,59,.88),rgba(9,24,41,.9));border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:0 12px 35px rgba(0,0,0,.15)}.kpi .label{color:var(--muted);font-size:12px}.kpi .num{font-size:27px;font-weight:800;margin:8px 0}.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}.blue{color:var(--cyan)}
+.section{margin-top:22px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.section h2{font-size:17px;margin:0}.muted{color:var(--muted)}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.gate-img{height:120px;border-radius:12px;background:linear-gradient(135deg,#153d61,#0a1829);display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:13px;position:relative;overflow:hidden}.gate-img:after{content:"CAMPUS GATE";position:absolute;bottom:9px;left:12px;font-size:9px;letter-spacing:1.5px;color:#ffffff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.gate-img img{width:100%;height:100%;object-fit:cover;display:block}.gate-img:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.58));z-index:1;pointer-events:none}.gate-image-label{position:absolute;left:12px;bottom:25px;z-index:2;font-size:9px;font-weight:700;letter-spacing:.7px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)}.gate-title{font-size:18px;font-weight:750}.row{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-size:12px}.row span:first-child{color:var(--muted)}.pill{font-size:10px;border-radius:20px;padding:4px 8px;background:#0c2b27;color:var(--green)}.pill.warn{background:#332710;color:var(--amber)}.pill.danger{background:#3a1721;color:var(--red)}.btn{border:1px solid #285a83;background:#113454;color:#dff3ff;border-radius:9px;padding:9px 12px}.btn.primary{background:linear-gradient(135deg,#1689db,#2458d8);border:0;color:white}.btn.danger{background:#401b26;border-color:#6a2938}.actions{display:flex;gap:8px;flex-wrap:wrap}.cols{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.activity{max-height:330px;overflow:auto}.event{padding:12px 0;border-bottom:1px solid #17304a;font-size:12px}.event strong{display:block;font-size:13px}.event .time{color:#6f8ba6;margin-right:8px}.riskbar{height:10px;background:#152b42;border-radius:20px;overflow:hidden;margin:12px 0}.riskbar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:78%}.page{display:none}.page.active{display:block}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.field input,.field select{width:100%;background:#081a2d;border:1px solid var(--line);color:white;padding:11px;border-radius:9px;outline:none}.pipeline{display:flex;gap:8px;overflow:auto;margin:20px 0}.agent{min-width:145px;padding:13px;border:1px solid var(--line);border-radius:11px;background:#0b1d31}.agent small{color:var(--muted)}.agent.active{border-color:#278bc6;box-shadow:0 0 18px rgba(57,167,255,.12)}.result{text-align:center;padding:22px;border-radius:13px;background:#0a2032;border:1px solid #21506f}.result h1{margin:5px 0}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{text-align:left;padding:11px;border-bottom:1px solid #18314b;white-space:nowrap}.table th{color:#88a4bd;font-weight:600}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:13px}.device-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.device{padding:15px;border:1px solid var(--line);border-radius:12px;background:#0a1d31}.device h3{font-size:14px;margin:0 0 8px}.map{height:480px;border-radius:16px;border:1px solid var(--line);position:relative;overflow:hidden;background-color:#091b2d;background-image:linear-gradient(#163451 1px,transparent 1px),linear-gradient(90deg,#163451 1px,transparent 1px);background-size:45px 45px}.road{position:absolute;background:#28445f;border-radius:20px;transform:rotate(-18deg)}.road.r1{width:85%;height:24px;left:7%;top:42%}.road.r2{width:24px;height:90%;left:48%;top:5%;transform:rotate(7deg)}.building{position:absolute;background:#12324e;border:1px solid #27516f;border-radius:10px;padding:12px;font-size:11px;color:#b8d1e7}.marker{position:absolute;padding:8px 10px;background:#0d6ca6;border:2px solid #67d8ff;border-radius:20px;font-size:11px;box-shadow:0 0 20px rgba(70,217,255,.4);animation:pulse 1.8s infinite}.m1{left:6%;top:38%}.m2{right:7%;top:20%}.m3{left:50%;bottom:8%}@keyframes pulse{50%{transform:scale(1.05);box-shadow:0 0 30px rgba(70,217,255,.6)}}.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:20}.modal.show{display:flex}.modalbox{width:min(520px,92vw);background:#0c1d31;border:1px solid #28506e;border-radius:16px;padding:22px}.qr{width:150px;height:150px;margin:15px auto;background:repeating-linear-gradient(45deg,#fff 0 5px,#111 5px 10px);border:10px solid white}.toast{position:fixed;right:25px;bottom:25px;background:#102b43;border:1px solid #2d628b;padding:13px 17px;border-radius:11px;display:none;z-index:30}.footer{margin-top:25px;color:#607d98;font-size:10px;text-align:center}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.gates,.device-grid{grid-template-columns:1fr}.cols{grid-template-columns:1fr}}
+@media(max-width:760px){.sidebar{width:70px;padding:16px 8px}.brand{font-size:0}.brand:before{content:"VS";font-size:20px}.brand small,.nav span{display:none}.nav button{justify-content:center}.main{margin-left:70px;width:calc(100% - 70px);padding:18px}.top{align-items:flex-start;gap:10px}.title{font-size:21px}.formgrid,.filters{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.map{height:380px}}
+
+/* ===== VIGNAN CUSTOM LIGHT THEME ===== */
+:root{
+  --bg:#f4f7fb;
+  --panel:#ffffff;
+  --panel2:#f8faff;
+  --line:#dce5f0;
+  --text:#17233b;
+  --muted:#61718a;
+  --blue:#1479c9;
+  --cyan:#1596d1;
+  --purple:#8274c6;
+  --green:#169b68;
+  --amber:#b87900;
+  --red:#df2633;
+}
+body{
+  background:
+    radial-gradient(circle at 85% 0%, rgba(130,116,198,.16) 0, transparent 28%),
+    radial-gradient(circle at 0% 100%, rgba(20,121,201,.10) 0, transparent 30%),
+    var(--bg);
+  color:var(--text);
+}
+.sidebar{
+  background:rgba(255,255,255,.96);
+  border-right:1px solid #dce5f0;
+  box-shadow:8px 0 28px rgba(38,61,91,.07);
+}
+.brand-with-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:16px;
+  color:#1b2740;
+}
+.brand-with-logo img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius:8px;
+  background:#fff;
+}
+.brand-with-logo small{
+  color:var(--blue);
+}
+.nav button{
+  color:#61718a;
+}
+.nav button.active,.nav button:hover{
+  background:linear-gradient(90deg,rgba(20,121,201,.12),rgba(130,116,198,.10));
+  color:#123d66;
+}
+.card{
+  background:rgba(255,255,255,.94);
+  border-color:#dce5f0;
+  box-shadow:0 12px 30px rgba(37,58,86,.07);
+}
+.eyebrow{color:#6d5db4}
+.sub,.muted{color:#61718a}
+.title{color:#15223a}
+.badge{
+  border-color:#cbd9e8;
+  background:#f1f7fd;
+  color:#315777;
+}
+.btn{
+  border-color:#c8d8e8;
+  background:#fff;
+  color:#214b70;
+}
+.btn.primary{
+  background:linear-gradient(135deg,#1479c9,#6658b5);
+  color:#fff;
+}
+.btn.danger{
+  background:#fff0f2;
+  border-color:#efb7bd;
+  color:#c51f2d;
+}
+.gate-img{
+  background:
+    linear-gradient(135deg,rgba(20,121,201,.92),rgba(130,116,198,.92)),
+    #eaf3fb;
+}
+.gate-img:after{color:#eaf5ff}
+.pill{background:#e8f7f0;color:#12805a}
+.pill.warn{background:#fff5dc;color:#a46c00}
+.pill.danger{background:#ffeaed;color:#c51f2d}
+.event{border-bottom-color:#e5ebf3}
+.event .time{color:#7a8ba1}
+.riskbar{background:#e7edf4}
+.riskbar i{background:linear-gradient(90deg,#24a66f,#2c8fd1)}
+.agent{
+  background:#f8fbff;
+  border-color:#dce5f0;
+}
+.agent.active{
+  border-color:#4b9bd2;
+  box-shadow:0 0 18px rgba(20,121,201,.12);
+}
+.result{
+  background:#f7fbff;
+  border-color:#cfe0ee;
+}
+.field input,.field select{
+  background:#fff;
+  border-color:#d6e1ec;
+  color:#17233b;
+}
+.table th,.table td{border-bottom-color:#e2e9f1}
+.table th{color:#60738b}
+.device{
+  background:#f9fbfd;
+  border-color:#dce5f0;
+}
+.map{
+  background-color:#edf4f9;
+  background-image:
+    linear-gradient(#d8e4ee 1px,transparent 1px),
+    linear-gradient(90deg,#d8e4ee 1px,transparent 1px);
+}
+.road{background:#c9d7e4}
+.building{
+  background:#fff;
+  border-color:#bcd1e3;
+  color:#35526d;
+  box-shadow:0 6px 18px rgba(48,73,101,.08);
+}
+.marker{
+  background:#1479c9;
+  border-color:#7cc8ef;
+}
+.modal{background:rgba(17,29,47,.52)}
+.modalbox{
+  background:#fff;
+  border-color:#d4e0ec;
+  color:#17233b;
+  box-shadow:0 24px 70px rgba(21,40,64,.22);
+}
+.toast{
+  background:#fff;
+  border-color:#cdddea;
+  color:#17233b;
+  box-shadow:0 12px 30px rgba(37,58,86,.14);
+}
+.footer{color:#75869b}
+
+/* Small VIGNAN accent stripe on the main content */
+.main{position:relative}
+.main:before{
+  content:"";
+  position:fixed;
+  left:250px;
+  top:0;
+  width:100px;
+  height:3px;
+  background:linear-gradient(90deg,#1479c9 0 55%,#8274c6 55% 78%,#df2633 78%);
+  z-index:10;
+}
+@media(max-width:760px){
+  .main:before{left:70px}
+  .brand-with-logo img{width:38px;height:38px}
+  .brand-with-logo{justify-content:center}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand brand-with-logo">
+    <img src="vignan-logo.jpg" alt="VIGNAN University logo">
+    <div>VIGNAN SMART ACCESS<small>AI SECURITY OPERATIONS</small></div>
+  </div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard">◈ <span>Dashboard</span></button>
+    <button data-page="map">⌖ <span>Campus Map</span></button>
+    <button data-page="access">▣ <span>Gate Access</span></button>
+    <button data-page="visitors">♙ <span>Visitor Management</span></button>
+    <button data-page="agents">✦ <span>AI Agents</span></button>
+    <button data-page="logs">≡ <span>Access Logs</span></button>
+    <button data-page="iot">⌁ <span>IoT Devices</span></button>
+    <button data-page="alerts">⚠ <span>Alerts</span></button>
+  </nav>
+</aside>
+<main class="main">
+<header class="top"><div><div class="eyebrow">VIGNAN'S FOUNDATION FOR SCIENCE, TECHNOLOGY & RESEARCH</div><div class="title">VIGNAN SMART ACCESS</div><div class="sub">Agentic AI-Driven Smart Campus Access Management · Vadlamudi, Guntur, Andhra Pradesh</div></div><div class="status"><span class="badge"><i class="dot"></i> SYSTEM OPERATIONAL</span><button class="btn primary" onclick="runDemo()">▶ Run Demo</button></div></header>
+
+<section id="dashboard" class="page active">
+<div class="grid">
+<div class="card kpi"><div class="label">Total Authorized Entries</div><div class="num">2,846</div><div class="green">↑ 8.4% today</div></div>
+<div class="card kpi"><div class="label">Current People Inside</div><div class="num" id="inside">1,428</div><div class="blue">Live estimate</div></div>
+<div class="card kpi"><div class="label">Pending Verification</div><div class="num" id="pending">17</div><div class="amber">Needs review</div></div>
+<div class="card kpi"><div class="label">High Risk Alerts</div><div class="num red" id="alertCount">3</div><div class="red">Security attention</div></div>
+</div>
+<div class="section"><div class="section-head"><h2>VIGNAN UNIVERSITY — CAMPUS ENTRY POINTS</h2><span class="badge">EXACTLY 3 MAIN ENTRY POINTS</span></div>
+<div class="gates" id="gateCards"></div><div class="muted" style="margin-top:10px;font-size:11px">Gate cards use campus/reference photographs for visual identification. They are not live CCTV images or exact gate-camera feeds.</div></div>
+<div class="section cols">
+<div class="card"><div class="section-head"><h2>Recent Access Activity</h2><span class="muted">LIVE</span></div><div class="activity" id="activity"></div></div>
+<div class="card"><div class="section-head"><h2>AI Risk Overview</h2><span class="pill">ENGINE ACTIVE</span></div><div style="font-size:34px;font-weight:800">78% <span class="muted" style="font-size:12px">LOW RISK</span></div><div class="riskbar"><i></i></div><div class="row"><span>Low Risk</span><b class="green">78%</b></div><div class="row"><span>Medium Risk</span><b class="amber">18%</b></div><div class="row"><span>High Risk</span><b class="red">4%</b></div></div>
+</div></section>
+
+<section id="map" class="page"><div class="card"><div class="section-head"><div><h2>VIGNAN UNIVERSITY CAMPUS MAP</h2><div class="muted">Stylized prototype map · simulated live security overlay</div></div><span class="badge">LIVE SECURITY OVERLAY</span></div><div class="map"><div class="road r1"></div><div class="road r2"></div><div class="building" style="left:27%;top:18%">Academic Block</div><div class="building" style="left:57%;top:12%">Hostels</div><div class="building" style="left:25%;bottom:18%">Library</div><div class="building" style="right:10%;bottom:18%">Academic Buildings</div><div class="marker m1">● University Gate</div><div class="marker m2">● Lara Gate</div><div class="marker m3">● Library Gate</div></div></div></section>
+
+<section id="access" class="page"><div class="card"><div class="section-head"><div><h2>SMART GATE ACCESS CONTROL</h2><div class="muted">Simulated identity, authorization and agentic risk decision</div></div><span class="badge">DEMO / PROTOTYPE</span></div>
+<div class="formgrid"><div class="field"><label>SELECT GATE</label><select id="gate"><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select></div><div class="field"><label>USER TYPE</label><select id="utype"><option>Student</option><option>Faculty</option><option>Parent</option><option>Visitor</option><option>Vendor</option><option>Event Guest</option></select></div><div class="field"><label>PERSON / CREDENTIAL ID</label><input id="pid" value="STU20261245"></div></div><div class="actions" style="margin-top:14px"><button class="btn" onclick="validId()">Simulate Valid ID</button><button class="btn danger" onclick="invalidId()">Simulate Invalid ID</button><button class="btn primary" onclick="verify()">SCAN / VERIFY ACCESS</button></div>
+<div class="pipeline" id="pipeline"></div><div id="accessResult"></div></div></section>
+
+<section id="visitors" class="page"><div class="card"><div class="section-head"><div><h2>VISITOR MANAGEMENT</h2><div class="muted">Visitor registration and simulated QR access workflow</div></div><span class="badge">DEMO DATA</span></div><div class="formgrid"><div class="field"><label>VISITOR NAME</label><input id="vname" placeholder="Visitor name"></div><div class="field"><label>MOBILE NUMBER</label><input id="vmobile" placeholder="10-digit mobile"></div><div class="field"><label>PURPOSE</label><input id="purpose" placeholder="Meeting / Event / Delivery"></div><div class="field"><label>HOST NAME</label><input id="host" placeholder="Host name"></div><div class="field"><label>DATE</label><input id="vdate" type="date"></div><div class="field"><label>TIME</label><input id="vtime" type="time"></div><div class="field"><label>PREFERRED GATE</label><select id="vgate"><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select></div></div><button class="btn primary" style="margin-top:15px" onclick="registerVisitor()">REGISTER VISITOR</button>
+<div class="section"><h2>Visitor Workflow</h2><div class="pipeline"><div class="agent">Visitor<br><small>Registration</small></div><div class="agent">Host Approval<br><small>Approval</small></div><div class="agent">QR Pass<br><small>Generated</small></div><div class="agent">Gate Verification<br><small>Scan</small></div><div class="agent">AI Decision<br><small>Access</small></div></div></div></div></section>
+
+<section id="agents" class="page"><div class="card"><div class="section-head"><div><h2>AGENTIC AI SECURITY ENGINE</h2><div class="muted">Six coordinated agents for access decisions</div></div><button class="btn primary" onclick="runAgents()">RUN AGENT ANALYSIS</button></div><div class="device-grid" id="agentsGrid"></div></div></section>
+
+<section id="logs" class="page"><div class="card"><div class="section-head"><div><h2>LIVE ACCESS LOGS</h2><div class="muted">Simulated Vignan University access records</div></div><button class="btn" onclick="exportLogs()">EXPORT LOGS</button></div><div class="filters"><select id="fgate" onchange="renderLogs()"><option>All Gates</option><option>University Gate</option><option>Lara Gate</option><option>Library Gate</option></select><select id="ftype" onchange="renderLogs()"><option>All Types</option><option>Student</option><option>Faculty</option><option>Visitor</option></select><select id="frisk" onchange="renderLogs()"><option>All Risk</option><option>LOW</option><option>MEDIUM</option><option>HIGH</option></select><select id="fdecision" onchange="renderLogs()"><option>All Decisions</option><option>GRANTED</option><option>DENIED</option><option>MANUAL REVIEW</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>Timestamp</th><th>Person ID</th><th>Name</th><th>User Type</th><th>Gate</th><th>Risk</th><th>Decision</th><th>Method</th></tr></thead><tbody id="logbody"></tbody></table></div></div></section>
+
+<section id="iot" class="page"><div class="card"><div class="section-head"><div><h2>IoT DEVICE MONITORING</h2><div class="muted">Simulated hardware data · future ESP32 integration ready</div></div><button class="btn primary" onclick="simulateDevice()">SIMULATE DEVICE EVENT</button></div><div class="device-grid" id="devices"></div><div class="section card" style="margin-top:18px"><h2>Future IoT Deployment Architecture</h2><div class="pipeline"><div class="agent">RFID RC522</div><div class="agent">ESP32</div><div class="agent">Wi-Fi</div><div class="agent">Backend / Firebase</div><div class="agent">AI Risk Engine</div><div class="agent">Website Dashboard</div><div class="agent">Gate Controller</div></div><div class="muted">Physical hardware is not connected in this prototype. The frontend simulates device events and state changes.</div></div></div></section>
+
+<section id="alerts" class="page"><div class="card"><div class="section-head"><div><h2>SECURITY ALERT CENTER</h2><div class="muted">High-risk and operational events</div></div><span class="badge">LIVE</span></div><div id="alertsList"></div></div></section>
+<div class="footer">VIGNAN SMART ACCESS · Student project prototype · All identities, IoT events and AI decisions are simulated demonstration data unless explicitly connected to authorized systems.</div>
+</main></div>
+<div class="modal" id="modal"><div class="modalbox" id="modalbox"></div></div><div class="toast" id="toast"></div>
+<script>
+const gates=[
+{name:"University Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"CLOSED",entries:1284,risk:"LOW",image:"https://vignan.ac.in/newvignan/assets/images/aboutus_img9.jpg",imageLabel:"VIGNAN CAMPUS REFERENCE"},
+{name:"Lara Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"CLOSED",entries:936,risk:"MEDIUM",image:"https://image-static.collegedunia.com/public/reviewPhotos/341724/IMG-20230201-WA0008.jpg",imageLabel:"LARA CAMPUS REFERENCE"},
+{name:"Library Gate",status:"ONLINE",rfid:"ONLINE",camera:"ONLINE",barrier:"LOCKED",entries:626,risk:"LOW",image:"https://vignan.ac.in/newvignan/assets/images/about_img1.jpeg",imageLabel:"NTR VIGNAN LIBRARY REFERENCE"}];
+let logs=[
+["08:41:23","STU20261245","Rahul Kumar","Student","University Gate","LOW","GRANTED","RFID"],
+["08:39:14","FAC10421","Dr. Priya Rao","Faculty","Lara Gate","LOW","GRANTED","RFID"],
+["08:35:02","VIS-DEMO-018","Unknown Visitor","Visitor","Lara Gate","HIGH","DENIED","Manual"],
+["08:31:45","STU20261082","Ananya Reddy","Student","Library Gate","LOW","GRANTED","RFID"]];
+let alerts=[
+{severity:"HIGH",gate:"Lara Gate",user:"Unknown Visitor",reason:"Invalid credential + no authorization",action:"Manual verification required",status:"ACTIVE"},
+{severity:"MEDIUM",gate:"University Gate",user:"STU-DEMO-041",reason:"Multiple rapid entry attempts",action:"Review access pattern",status:"ACTIVE"},
+{severity:"HIGH",gate:"Library Gate",user:"VIS-DEMO-021",reason:"Multiple failed RFID scans",action:"Manual verification required",status:"ACTIVE"}];
+const agentNames=[["Identity Agent","Checks identity and credentials."],["Authorization Agent","Verifies entry permission."],["Risk Agent","Evaluates risk indicators."],["Anomaly Agent","Identifies unusual access patterns."],["Policy Agent","Recommends Fast / Standard / Manual action."],["Notification Agent","Alerts security personnel when required."]];
+let devices=[
+["ESP32-UG-001","ESP32 Controller","University Gate","ONLINE",94],["RFID-UG-001","RFID Reader","University Gate","ONLINE",91],["CAM-UG-001","Camera","University Gate","ONLINE",89],["BAR-UG-001","Barrier","University Gate","ONLINE",96],
+["ESP32-LG-001","ESP32 Controller","Lara Gate","ONLINE",87],["RFID-LG-001","RFID Reader","Lara Gate","ONLINE",84],["CAM-LG-001","Camera","Lara Gate","ONLINE",82],["BAR-LG-001","Barrier","Lara Gate","ONLINE",90],
+["ESP32-LIB-001","ESP32 Controller","Library Gate","ONLINE",92],["RFID-LIB-001","RFID Reader","Library Gate","ONLINE",88],["CAM-LIB-001","Camera","Library Gate","ONLINE",86],["DOOR-LIB-001","Door Sensor","Library Gate","ONLINE",93]];
+
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2600)}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active")});
+function renderGates(){document.getElementById("gateCards").innerHTML=gates.map((g,i)=>`<div class="card"><div class="gate-img"><img src="${g.image}" alt="${g.name} reference image" loading="lazy"><span class="gate-image-label">${g.imageLabel}</span></div><div class="gate-title">${g.name}</div><div class="row"><span>Status</span><b class="green">${g.status}</b></div><div class="row"><span>RFID Reader</span><b class="green">${g.rfid}</b></div><div class="row"><span>Camera</span><b class="green">${g.camera}</b></div><div class="row"><span>Barrier / Door</span><b>${g.barrier}</b></div><div class="row"><span>Today's Entries</span><b>${g.entries.toLocaleString()}</b></div><div class="row"><span>Current Risk</span><span class="pill ${g.risk==="HIGH"?"danger":g.risk==="MEDIUM"?"warn":""}">${g.risk}</span></div><button class="btn" onclick="showGate(${i})">VIEW GATE</button></div>`).join("")}
+function renderActivity(){document.getElementById("activity").innerHTML=logs.slice(0,7).map(l=>`<div class="event"><span class="time">${l[0]}</span><strong>${l[2]} · ${l[6]}</strong><span class="muted">${l[1]} · ${l[3]} · ${l[4]} · ${l[5]} risk</span></div>`).join("")}
+function renderLogs(){let a=document.getElementById("fgate").value,b=document.getElementById("ftype").value,c=document.getElementById("frisk").value,d=document.getElementById("fdecision").value;let rows=logs.filter(x=>(a==="All Gates"||x[4]===a)&&(b==="All Types"||x[3]===b)&&(c==="All Risk"||x[5]===c)&&(d==="All Decisions"||x[6]===d));document.getElementById("logbody").innerHTML=rows.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td>${x[4]}</td><td class="${x[5]==="HIGH"?"red":x[5]==="MEDIUM"?"amber":"green"}">${x[5]}</td><td>${x[6]}</td><td>${x[7]}</td></tr>`).join("")}
+function renderAgents(){document.getElementById("agentsGrid").innerHTML=agentNames.map((a,i)=>`<div class="device agent-card" id="agent${i}"><h3>✦ ${a[0]}</h3><div class="pill">ACTIVE</div><p class="muted" style="font-size:11px">${a[1]}</p><small id="agentAct${i}">Latest activity: Monitoring</small></div>`).join("")}
+function renderDevices(){document.getElementById("devices").innerHTML=devices.map((d,i)=>`<div class="device"><h3>${d[1]}</h3><div class="row"><span>Gate</span><b>${d[2]}</b></div><div class="row"><span>Status</span><b class="${d[3]==="ONLINE"?"green":"red"}">${d[3]}</b></div><div class="row"><span>Signal</span><b>${d[4]}%</b></div><div class="row"><span>Device ID</span><span>${d[0]}</span></div><div class="row"><span>Last Update</span><span>${Math.floor(Math.random()*8)+1}s ago</span></div><button class="btn" onclick="toggleDevice(${i})">${d[3]==="ONLINE"?"Turn Offline":"Turn Online"}</button></div>`).join("")}
+function renderAlerts(){document.getElementById("alertsList").innerHTML=alerts.map((a,i)=>`<div class="card" style="margin:10px 0;border-left:4px solid ${a.severity==="HIGH"?"var(--red)":"var(--amber)"}"><div class="row"><b class="${a.severity==="HIGH"?"red":"amber"}">${a.severity} RISK ALERT</b><span class="pill ${a.status==="ACTIVE"?"danger":""}">${a.status}</span></div><div class="row"><span>Gate</span><b>${a.gate}</b></div><div class="row"><span>User</span><b>${a.user}</b></div><div class="row"><span>Reason</span><span>${a.reason}</span></div><div class="row"><span>Action</span><span>${a.action}</span></div><div class="actions"><button class="btn" onclick="showAlert(${i})">VIEW DETAILS</button><button class="btn" onclick="toast('Security officer assigned to alert')">ASSIGN SECURITY OFFICER</button><button class="btn primary" onclick="resolveAlert(${i})">RESOLVE ALERT</button></div></div>`).join("");document.getElementById("alertCount").textContent=alerts.filter(a=>a.status==="ACTIVE").length}
+function showGate(i){let g=gates[i];document.getElementById("modalbox").innerHTML=`<h2>${g.name}</h2><p class="muted">Simulated gate control panel</p><div class="row"><span>Status</span><b class="green">${g.status}</b></div><div class="row"><span>Risk</span><b>${g.risk}</b></div><div class="row"><span>Today's Entries</span><b>${g.entries}</b></div><div class="row"><span>RFID</span><b>${g.rfid}</b></div><div class="row"><span>Camera</span><b>${g.camera}</b></div><div class="row"><span>Barrier/Door</span><b>${g.barrier}</b></div><div class="actions"><button class="btn primary" onclick="toast('Access scanner opened for ${g.name}')">SCAN ACCESS</button><button class="btn" onclick="toast('Barrier action simulated')">OPEN BARRIER — SIMULATED</button><button class="btn" onclick="closeModal()">CLOSE</button></div>`;document.getElementById("modal").classList.add("show")}
+function showAlert(i){let a=alerts[i];document.getElementById("modalbox").innerHTML=`<h2 class="red">${a.severity} RISK ALERT</h2><p><b>${a.gate}</b> · ${a.user}</p><p class="muted">${a.reason}</p><p>${a.action}</p><button class="btn primary" onclick="resolveAlert(${i});closeModal()">RESOLVE ALERT</button> <button class="btn" onclick="closeModal()">CLOSE</button>`;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function validId(){document.getElementById("pid").value="STU20261245";document.getElementById("utype").value="Student";toast("Valid demo credential loaded")}
+function invalidId(){document.getElementById("pid").value="VIS-UNKNOWN";document.getElementById("utype").value="Visitor";toast("Suspicious demo credential loaded")}
+function verify(){let id=document.getElementById("pid").value.trim(),gate=document.getElementById("gate").value,type=document.getElementById("utype").value,valid=id==="STU20261245"||id==="FAC10421";let names={"STU20261245":"Rahul Kumar","FAC10421":"Dr. Priya Rao"};let steps=["Identity Agent","Authorization Agent","Risk Agent","Anomaly Agent","Policy Agent","Notification Agent"];let p=document.getElementById("pipeline");p.innerHTML=steps.map((s,i)=>`<div class="agent" id="vp${i}"><b>${s}</b><br><small>Waiting...</small></div>`).join("");document.getElementById("accessResult").innerHTML="";steps.forEach((s,i)=>setTimeout(()=>{document.getElementById("vp"+i).classList.add("active");document.getElementById("vp"+i).querySelector("small").textContent="Completed";},i*550));setTimeout(()=>{let risk=valid?"LOW":"HIGH",decision=valid?"GRANTED":"MANUAL REVIEW";logs.unshift([new Date().toLocaleTimeString()," "+id,names[id]||"Unknown Visitor",type,gate,risk,decision,valid?"RFID":"Manual"]);if(!valid){alerts.unshift({severity:"HIGH",gate,user:"Unknown Visitor",reason:"Invalid credential + no authorization",action:"Manual verification required",status:"ACTIVE"});toast("High-risk alert created");}else toast("ACCESS GRANTED — gate action simulated");renderAll();document.getElementById("accessResult").innerHTML=`<div class="result"><div class="${valid?"green":"red"}">FINAL DECISION</div><h1 class="${valid?"green":"red"}">${valid?"ACCESS GRANTED":"ACCESS DENIED / MANUAL VERIFICATION"}</h1><div class="row"><span>Identity</span><b>${valid?"VERIFIED":"FAILED / UNKNOWN"}</b></div><div class="row"><span>Authorization</span><b>${valid?"AUTHORIZED":"NOT AUTHORIZED"}</b></div><div class="row"><span>Risk</span><b class="${valid?"green":"red"}">${risk}</b></div><div class="row"><span>Anomaly</span><b>${valid?"NONE DETECTED":"DETECTED"}</b></div><div class="row"><span>Policy</span><b>${valid?"FAST LANE":"MANUAL REVIEW"}</b></div></div>`},3600)}
+function runAgents(){agentNames.forEach((_,i)=>{setTimeout(()=>{document.getElementById("agent"+i).classList.add("active");document.getElementById("agentAct"+i).textContent="Latest activity: Analysis completed";},i*500)});toast("Agentic analysis running")}
+function registerVisitor(){let n=document.getElementById("vname").value||"Demo Visitor",g=document.getElementById("vgate").value,id="VIS-DEMO-"+String(Math.floor(Math.random()*900)+100);document.getElementById("modalbox").innerHTML=`<div style="text-align:center"><div class="eyebrow">SIMULATED QR VISITOR PASS</div><h2>${n}</h2><div class="qr"></div><p>${id}</p><p class="muted">${g} · ${document.getElementById("purpose").value||"Campus visit"}</p><p>Visitor → Registration → Host Approval → QR Pass → Gate Verification → Access Decision</p><button class="btn primary" onclick="toast('Visitor pass ready');closeModal()">DOWNLOAD PASS</button> <button class="btn" onclick="closeModal()">CLOSE</button></div>`;document.getElementById("modal").classList.add("show")}
+function toggleDevice(i){devices[i][3]=devices[i][3]==="ONLINE"?"OFFLINE":"ONLINE";let gate=devices[i][2];if(devices[i][3]==="OFFLINE"){alerts.unshift({severity:"MEDIUM",gate,user:"IoT System",reason:`${devices[i][1]} ${devices[i][0]} went offline`,action:"Inspect device connectivity",status:"ACTIVE"});toast("Device offline alert created")}renderAll()}
+function simulateDevice(){let i=Math.floor(Math.random()*devices.length);devices[i][3]=devices[i][3]==="ONLINE"?"OFFLINE":"ONLINE";if(devices[i][3]==="OFFLINE")alerts.unshift({severity:"HIGH",gate:devices[i][2],user:"IoT System",reason:"Simulated high-risk device event",action:"Manual verification required",status:"ACTIVE"});logs.unshift([new Date().toLocaleTimeString(),devices[i][0],"IoT Device","Event Guest",devices[i][2],"HIGH","MANUAL REVIEW","IoT"]);toast("Simulated IoT event triggered");renderAll()}
+function resolveAlert(i){alerts[i].status="RESOLVED";toast("Alert resolved");renderAll()}
+function exportLogs(){let csv=["Timestamp,Person ID,Name,User Type,Gate,Risk,Decision,Method",...logs.map(x=>x.join(","))].join("\\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="vignan-smart-access-logs.csv";a.click()}
+function runDemo(){document.querySelector('[data-page="access"]').click();validId();verify();toast("Full access-control demo started")}
+function renderAll(){renderGates();renderActivity();renderLogs();renderAgents();renderDevices();renderAlerts()}
+renderAll();
+</script>
+</body>
+</html>
