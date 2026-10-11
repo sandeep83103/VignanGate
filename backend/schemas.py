@@ -22,6 +22,12 @@ class ScanRequest(BaseModel):
     method: str = "RFID" # RFID, QR Pass, Manual
     user_type: Optional[str] = "Student"
 
+class AgentTraceItem(BaseModel):
+    agent_name: str
+    status: str
+    duration_ms: float
+    output_summary: str
+
 # Scan Evaluation Response
 class ScanResponse(BaseModel):
     decision: str # GRANTED, DENIED, MANUAL REVIEW
@@ -30,9 +36,13 @@ class ScanResponse(BaseModel):
     user_type: str
     gate_id: str
     risk_level: str
-    barrier_command: str # OPEN_BARRIER, LOCK_BARRIER
+    risk_score: float = 0.0
+    barrier_command: str # OPEN_BARRIER, LOCK_BARRIER, HOLD_CLOSED
     reason: str
     timestamp: str
+    anomaly_flags: List[str] = []
+    agent_trace: List[AgentTraceItem] = []
+    pipeline_latency_ms: float = 0.0
 
 # Barrier Remote Command
 class BarrierCommand(BaseModel):

@@ -2,13 +2,15 @@ import time
 import datetime
 from typing import Dict, Tuple, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select
 from fastapi import HTTPException
 
 from backend.config import settings
-from backend.models import User, Gate, AccessLog, Alert
-from backend.schemas import ScanRequest, ScanResponse
+from backend.models import Gate, AccessLog
+from backend.schemas import ScanRequest, ScanResponse, AgentTraceItem
 from backend.services.websocket_manager import ws_manager
+from backend.ai_engine.context import AccessContext
+from backend.ai_engine.pipeline import agentic_pipeline
 
 class IngestionService:
     def __init__(self):
@@ -32,93 +34,52 @@ class IngestionService:
         cred = req.credential_id.strip()
         self.check_anti_rebound(req.gate_id, cred)
 
-        # Query user by person_id or rfid_uid
-        stmt = select(User).where((User.person_id == cred) | (User.rfid_uid == cred.upper()))
-        result = await db.execute(stmt)
-        user = result.scalars().first()
-
         now_dt = datetime.datetime.now(datetime.timezone.utc)
         now_str = now_dt.strftime("%H:%M:%S")
 
-        if user and user.status == "ACTIVE":
-            decision = "GRANTED"
-            risk_level = "LOW"
-            barrier_command = "OPEN_BARRIER"
-            reason = f"Verified {user.role}: {user.full_name} ({user.department or 'General'})"
-            person_id = user.person_id
-            full_name = user.full_name
-            user_type = user.role
+        # Initialize Multi-Agent Pipeline Context
+        ctx = AccessContext(
+            gate_id=req.gate_id,
+            credential_id=cred,
+            method=req.method,
+            user_type=req.user_type,
+            timestamp=now_dt
+        )
 
-            # Increment Gate entries counter
+        # Execute the Coordinated 6-Agent AI Engine
+        ctx = await agentic_pipeline.execute(ctx, db)
+
+        # Map Policy Decision to Standard Verdict
+        if ctx.policy_decision == "FAST_LANE_GRANT":
+            decision = "GRANTED"
+            barrier_command = "OPEN_BARRIER"
+            # Increment Gate entry counter
             gate_stmt = select(Gate).where(Gate.gate_name == req.gate_id)
             gate_res = await db.execute(gate_stmt)
             gate_obj = gate_res.scalars().first()
             if gate_obj:
                 gate_obj.today_entries += 1
                 await db.commit()
-
-        elif user and user.status != "ACTIVE":
-            decision = "DENIED"
-            risk_level = "HIGH"
-            barrier_command = "LOCK_BARRIER"
-            reason = f"Suspended credential: {user.full_name} ({user.status})"
-            person_id = user.person_id
-            full_name = user.full_name
-            user_type = user.role
-
-            # Generate security alert
-            alert = Alert(
-                severity="HIGH",
-                gate_id=req.gate_id,
-                user_identifier=f"{person_id} ({full_name})",
-                reason=reason,
-                action_required="Officer manual inspection required",
-                status="ACTIVE"
-            )
-            db.add(alert)
-            await db.commit()
-
-            await ws_manager.broadcast("NEW_ALERT", {
-                "severity": "HIGH",
-                "gate": req.gate_id,
-                "reason": reason
-            })
-
+        elif ctx.policy_decision == "STANDARD_INSPECT":
+            decision = "MANUAL REVIEW"
+            barrier_command = "HOLD_CLOSED"
         else:
             decision = "DENIED"
-            risk_level = "HIGH"
             barrier_command = "LOCK_BARRIER"
-            reason = "Unregistered credential UID / Unknown visitor"
-            person_id = cred
-            full_name = "Unknown Subject"
-            user_type = req.user_type or "Visitor"
 
-            # Generate security alert
-            alert = Alert(
-                severity="HIGH",
-                gate_id=req.gate_id,
-                user_identifier=f"Unregistered ID: {cred}",
-                reason=reason,
-                action_required="Security guard verification required",
-                status="ACTIVE"
-            )
-            db.add(alert)
-            await db.commit()
+        person_id = ctx.person_id or cred
+        full_name = ctx.full_name or "Unknown Subject"
+        user_type = ctx.role or req.user_type or "Visitor"
+        reason = ctx.final_reason
 
-            await ws_manager.broadcast("NEW_ALERT", {
-                "severity": "HIGH",
-                "gate": req.gate_id,
-                "reason": reason
-            })
-
-        # Record Access Log
+        # Persist immutable AccessLog
         log = AccessLog(
             timestamp=now_dt,
             person_id=person_id,
             full_name=full_name,
             user_type=user_type,
             gate_id=req.gate_id,
-            risk_level=risk_level,
+            risk_level=ctx.risk_level,
             decision=decision,
             method=req.method,
             reason=reason
@@ -126,16 +87,31 @@ class IngestionService:
         db.add(log)
         await db.commit()
 
-        # Broadcast live scan event to all SOC Dashboards
+        # Format trace items for response and live dashboard
+        trace_items = [
+            AgentTraceItem(
+                agent_name=step.agent_name,
+                status=step.status,
+                duration_ms=step.duration_ms,
+                output_summary=step.output_summary
+            ) for step in ctx.execution_trace
+        ]
+
+        # Broadcast live scan event with full multi-agent breakdown to SOC Dashboards
         await ws_manager.broadcast("SCAN_EVENT", {
             "timestamp": now_str,
             "person_id": person_id,
             "full_name": full_name,
             "user_type": user_type,
             "gate": req.gate_id,
-            "risk": risk_level,
+            "risk": ctx.risk_level,
+            "risk_score": ctx.risk_score,
             "decision": decision,
-            "method": req.method
+            "method": req.method,
+            "reason": reason,
+            "anomalies": ctx.anomaly_flags,
+            "pipeline_ms": ctx.total_pipeline_ms,
+            "agent_trace": [t.model_dump() for t in trace_items]
         })
 
         return ScanResponse(
@@ -144,10 +120,14 @@ class IngestionService:
             full_name=full_name,
             user_type=user_type,
             gate_id=req.gate_id,
-            risk_level=risk_level,
+            risk_level=ctx.risk_level,
+            risk_score=ctx.risk_score,
             barrier_command=barrier_command,
             reason=reason,
-            timestamp=now_str
+            timestamp=now_str,
+            anomaly_flags=ctx.anomaly_flags,
+            agent_trace=trace_items,
+            pipeline_latency_ms=ctx.total_pipeline_ms
         )
 
 ingestion_service = IngestionService()
