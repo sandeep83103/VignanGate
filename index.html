@@ -1666,6 +1666,51 @@ function renderAll() {
 
 // Initial render
 renderAll();
+
+// ==========================================
+// REAL-TIME BACKEND WEBSOCKET GATEWAY
+// ==========================================
+function initWebSocket() {
+  const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+  const wsHost = window.location.host ? window.location.host : 'localhost:8000';
+  const wsUrl = `${wsProtocol}${wsHost}/ws/soc`;
+
+  try {
+    const ws = new WebSocket(wsUrl);
+    ws.onopen = () => {
+      console.log("[WebSocket] Connected to Vignan Smart Access Backend Gateway.");
+      const badge = document.querySelector(".top .badge");
+      if (badge) badge.innerHTML = '<i class="dot"></i> CLOUD GATEWAY SYNCED';
+    };
+    ws.onmessage = (event) => {
+      try {
+        const envelope = JSON.parse(event.data);
+        if (envelope.event === 'SCAN_EVENT') {
+          const d = envelope.data;
+          logs.unshift([d.timestamp, d.person_id, d.full_name, d.user_type, d.gate, d.risk, d.decision, d.method]);
+          renderActivity();
+          renderLogs();
+        } else if (envelope.event === 'NEW_ALERT') {
+          toast(`Cloud Alert: ${envelope.data.reason}`);
+          renderAlerts();
+        } else if (envelope.event === 'TELEMETRY_UPDATE') {
+          const dev = devices.find(x => x[0] === envelope.data.device_id);
+          if (dev) {
+            dev[3] = envelope.data.status;
+            dev[4] = envelope.data.signal_percent;
+            renderDevices();
+          }
+        }
+      } catch(e) {}
+    };
+    ws.onerror = () => {
+      // Graceful fallback to standalone simulator
+      console.log("[WebSocket] Backend gateway unreachable; active in standalone browser mode.");
+    };
+  } catch(e) {}
+}
+
+initWebSocket();
 </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ websockets==17.2
 
 # --- Data Validation & Configuration ---
 pydantic==2.14.1
+pydantic-settings==2.15.0
 pydantic_core==2.50.1
 python-dotenv==1.2.4
 
@@ -19,6 +20,7 @@ paho-mqtt==2.1.0
 # --- Database & Asynchronous ORM ---
 SQLAlchemy==2.1.4
 aiosqlite==0.22.1
+greenlet==3.5.6
 
 # --- QR Code & Media Processing ---
 qrcode==8.2

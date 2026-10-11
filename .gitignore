@@ -40,3 +40,8 @@ wheels/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Databases & Runtime storage
+*.db
+*.sqlite3
+vignan_gate.db
