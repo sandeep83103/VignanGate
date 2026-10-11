@@ -1,52 +1,54 @@
 # ==============================================================================
-# VIGNAN SMART ACCESS - Project Dependencies
+# VIGNAN SMART ACCESS — Institutional Perimeter Security System Dependencies
+# Target Python Environment: Python 3.14.x / Windows & Linux Production
+# Institution: Vignan's Foundation for Science, Technology & Research (VFSTR)
 # ==============================================================================
 
-# --- Web Framework & Real-Time API ---
-fastapi==0.143.0
-uvicorn==0.54.0
-starlette==1.7.0
-websockets==17.2
+# --- Asynchronous Web Framework & Real-Time ASGI Server ---
+fastapi==0.143.0            # High-performance async web framework
+uvicorn==0.54.0             # Lightning-fast ASGI web server with hot-reload
+starlette==1.7.0            # Core ASGI foundation and routing toolkit
+websockets==17.2            # Real-time full-duplex WebSocket hub for SOC live updates
 
-# --- Data Validation & Configuration ---
-pydantic==2.14.1
-pydantic-settings==2.15.0
-pydantic_core==2.50.1
-python-dotenv==1.2.4
+# --- Data Validation & Strongly-Typed Environment Settings ---
+pydantic==2.14.1            # Data parsing and validation library using Python type hints
+pydantic-settings==2.15.0   # Environment variable management via Pydantic settings models
+pydantic_core==2.50.1       # High-performance Rust backend for Pydantic
+python-dotenv==1.2.4        # Reads key-value pairs from .env files
 
-# --- IoT Messaging & Edge Protocols ---
-paho-mqtt==2.1.0
+# --- Edge IoT Messaging & Telemetry Protocols ---
+paho-mqtt==2.1.0            # MQTT client for ESP32 edge microcontroller heartbeats
 
-# --- Database & Asynchronous ORM ---
-SQLAlchemy==2.1.4
-aiosqlite==0.22.1
-greenlet==3.5.6
+# --- Database & Asynchronous Object Relational Mapping (ORM) ---
+SQLAlchemy==2.1.4           # SQL toolkit and Object Relational Mapper (2.0 async API)
+aiosqlite==0.22.1           # Async bridge for SQLite database with WAL mode support
+greenlet==3.5.6             # Lightweight in-process coroutines required by SQLAlchemy async
 
-# --- QR Code & Media Processing ---
-qrcode==8.2
-Pillow==12.3.0
+# --- Digital Visitor Pass Generation & Computer Vision Verification ---
+qrcode==8.2                 # Generates authentic 2D matrix QR barcodes
+Pillow==12.3.0              # Imaging library for streaming PNG digital visitor badges
 
-# --- Asynchronous Networking & HTTP Client ---
-httpx==0.28.1
-httpcore==1.0.9
-anyio==4.15.1
-certifi==2026.7.22
-idna==3.20
-h11==0.16.0
+# --- Asynchronous HTTP Client & Network Stress Testing ---
+httpx==0.28.1               # Asynchronous HTTP client for API testing & morning rush simulator
+httpcore==1.0.9             # Low-level HTTP networking engine for httpx
+anyio==4.15.1               # Asynchronous event loop abstraction layer
+certifi==2026.7.22          # Mozilla's carefully curated collection of Root Certificates
+idna==3.20                  # Internationalized Domain Names in Applications (IDNA) support
+h11==0.16.0                 # Pure-Python, bring-your-own-I/O implementation of HTTP/1.1
 
-# --- Type Annotations & Telemetry ---
-typing_extensions==4.16.0
-typing-inspection==0.4.4
-annotated-types==0.8.0
-annotated-doc==0.0.5
-opentelemetry-api==1.45.1
+# --- Type Annotations, System Introspection & Telemetry ---
+typing_extensions==4.16.0   # Backported and experimental type hints
+typing-inspection==0.4.4    # Runtime inspection of Python type annotations
+annotated-types==0.8.0      # Reusable type annotations
+annotated-doc==0.0.5        # Runtime documentation extraction from type annotations
+opentelemetry-api==1.45.1   # Distributed tracing and telemetry instrumentation
 
-# --- Testing & Development ---
-pytest==9.1.1
-pytest-asyncio==1.4.0
-pluggy==1.6.0
-iniconfig==2.3.1
-packaging==26.3
-Pygments==2.21.0
-colorama==0.4.6
-click==8.5.0
+# --- Automated Testing Suite & Development Benchmarks ---
+pytest==9.1.1               # Robust automated test framework
+pytest-asyncio==1.4.0       # Asynchronous coroutine test runner for pytest
+pluggy==1.6.0               # Plugin management engine used by pytest
+iniconfig==2.3.1            # Fast INI-file configuration parser
+packaging==26.3             # Core utilities for Python package versioning
+Pygments==2.21.0            # Generic syntax highlighter
+colorama==0.4.6             # Cross-platform colored terminal text output
+click==8.5.0                # Composable command-line interface toolkit
