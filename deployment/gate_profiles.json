@@ -1,0 +1,147 @@
+{
+  "campus": "Vignan's Foundation for Science, Technology & Research (VFSTR)",
+  "location": "Vadlamudi, Guntur District, Andhra Pradesh - 522213",
+  "project": "Vignan Smart Access Perimeter Security System",
+  "version": "1.0.0-PROD",
+  "last_updated": "2026-10-12T00:00:00Z",
+  "gates": [
+    {
+      "gate_id": "GATE-LIB-01",
+      "gate_name": "Library Gate (Gate 3 - Pilot)",
+      "phase": "Phase 6 Pilot Installation",
+      "sector": "Sector C - Central Library & Academic Core",
+      "network": {
+        "ip_address": "10.40.3.15",
+        "mac_address": "AC:67:B2:34:E1:C3",
+        "vlan": 40,
+        "mqtt_client_id": "ESP32-LIB-001",
+        "telemetry_topic": "vignan/gates/GATE-LIB-01/telemetry",
+        "command_topic": "vignan/gates/GATE-LIB-01/command"
+      },
+      "physical_specifications": {
+        "barrier_type": "Optical Fastlane Speed Gate / Brushless DC Turnstile",
+        "operating_lanes": 1,
+        "lane_width_mm": 650,
+        "actuator_model": "Kaba-Style SpeedSec 900",
+        "open_time_ms": 1200,
+        "hold_open_duration_ms": 3000,
+        "fail_safe_mode": "Automatic Free-Swinging Fail-Open on Power Loss / Fire"
+      },
+      "hardware_sensors": {
+        "microcontroller": "ESP32-WROOM-32 (Dual Core 240MHz, 4MB Flash)",
+        "rfid_reader": "MFRC522 High-Frequency 13.56MHz Mifare Reader (SPI)",
+        "qr_scanner": "Waveshare 2D Optical CMOS Engine (UART 115200 baud)",
+        "anti_tailgating": "6-Beam Infrared Photocell Cross-Array",
+        "display": "0.96 inch I2C SSD1306 OLED User Prompt Display",
+        "audio_feedback": "Piezo Electric Buzzer 85dB @ 10cm",
+        "emergency_pin": "GPIO 35 (Active-LOW Dry Contact Interlock)"
+      },
+      "target_performance": {
+        "min_clearance_throughput": "35 persons/minute per lane",
+        "max_tap_latency_ms": 150,
+        "target_uptime_sla": "99.95%",
+        "daily_capacity": 4500
+      },
+      "pilot_details": {
+        "duration_days": 14,
+        "cohort": "B.Tech CSE & ECE Year III & IV Students + Library Faculty",
+        "sample_size": 1850,
+        "success_criteria": "Zero tailgating escapes, < 150ms latency, zero unlogged scans"
+      }
+    },
+    {
+      "gate_id": "GATE-LG-01",
+      "gate_name": "Lara Gate (Gate 2)",
+      "phase": "Phase 6 Secondary Rollout",
+      "sector": "Sector B - North Campus / Lara Institute Connector",
+      "network": {
+        "ip_address": "10.40.2.12",
+        "mac_address": "AC:67:B2:78:A4:B2",
+        "vlan": 40,
+        "mqtt_client_id": "ESP32-LG-001",
+        "telemetry_topic": "vignan/gates/GATE-LG-01/telemetry",
+        "command_topic": "vignan/gates/GATE-LG-01/command"
+      },
+      "physical_specifications": {
+        "barrier_type": "Combined Dual-Lane Motorized Boom Barrier & Pedestrian Turnstile",
+        "operating_lanes": 2,
+        "lane_configuration": [
+          {"lane_id": 1, "type": "Vehicular", "width_m": 3.8, "barrier": "Motorized Aluminum Boom Arm (3m)"},
+          {"lane_id": 2, "type": "Pedestrian", "width_m": 1.0, "barrier": "Tripod Turnstile"}
+        ],
+        "actuator_model": "BFT Giotto Ultra 36S High-Speed Barrier",
+        "open_time_ms": 1800,
+        "hold_open_duration_ms": 4000,
+        "fail_safe_mode": "Auto-Raise to 90 Degrees on Emergency Interlock"
+      },
+      "hardware_sensors": {
+        "microcontroller": "ESP32-WROOM-32 with External Helical Antenna",
+        "rfid_reader": "Dual: UHF Long-Range 865MHz + RC522 Mifare Tap Reader",
+        "qr_scanner": "Integrated Industrial IP65 Optical Reader",
+        "anti_tailgating": "Inductive Ground Loop Detector + Dual Optical Beams",
+        "display": "Red/Green High-Intensity LED Traffic Signal (200mm)",
+        "emergency_pin": "GPIO 35 (Active-LOW Dry Contact Interlock)"
+      },
+      "target_performance": {
+        "min_clearance_throughput": "30 persons/minute per lane (Vehicular: 18 vehicles/min)",
+        "max_tap_latency_ms": 180,
+        "target_uptime_sla": "99.90%",
+        "daily_capacity": 6500
+      },
+      "inter_gate_sync": {
+        "sync_targets": ["GATE-UG-01", "GATE-LIB-01"],
+        "apb_window_seconds": 120,
+        "velocity_check_max_speed_kmh": 60
+      }
+    },
+    {
+      "gate_id": "GATE-UG-01",
+      "gate_name": "University Gate (Gate 1 - Main)",
+      "phase": "Phase 6 Main Perimeter Rollout",
+      "sector": "Sector A - Main Perimeter (Vadlamudi / Highway Egress)",
+      "network": {
+        "ip_address": "10.40.1.10",
+        "mac_address": "AC:67:B2:11:F9:01",
+        "vlan": 40,
+        "redundancy": "Dual Uplink (Fiber-Optic Gigabit Ethernet + Industrial 4G Failover)",
+        "mqtt_client_id": "ESP32-UG-001",
+        "telemetry_topic": "vignan/gates/GATE-UG-01/telemetry",
+        "command_topic": "vignan/gates/GATE-UG-01/command"
+      },
+      "physical_specifications": {
+        "barrier_type": "4-Lane High-Throughput Motorized Boom Barrier Gantries",
+        "operating_lanes": 4,
+        "lane_configuration": [
+          {"lane_id": 1, "type": "Student Two-Wheelers Inbound", "reader": "Overhead UHF RFID + Tap Scanner", "capacity_min": 35},
+          {"lane_id": 2, "type": "Student Two-Wheelers Overflow/Outbound", "reader": "Overhead UHF RFID + Tap Scanner", "capacity_min": 35},
+          {"lane_id": 3, "type": "Faculty & Staff Four-Wheelers", "reader": "Long-Range UHF Windshield Reader", "capacity_min": 25},
+          {"lane_id": 4, "type": "Visitors, College Buses & Emergency Corridor", "reader": "Optical QR Gate Camera & Manual Guard Override", "capacity_min": 25}
+        ],
+        "actuator_model": "FAAC 620 High-Speed Rapid Arm",
+        "open_time_ms": 1100,
+        "hold_open_duration_ms": 3500,
+        "fail_safe_mode": "Auto-Raise to 90 Degrees via Hardware Spring Counterweight"
+      },
+      "hardware_sensors": {
+        "microcontroller": "Quad ESP32 Controller Array with Central Gate Hub",
+        "rfid_reader": "Alien ALR-9680 Commercial 4-Port UHF Reader + RC522 Pedestrian",
+        "qr_scanner": "High-Definition 1080p Optical Pass Validator Camera",
+        "anti_tailgating": "Underground Dual-Channel Magnetic Loop Detectors + Laser Safety Scanner",
+        "display": "Dual Ultra-Bright 3-Color LED Info Display (32x64)",
+        "emergency_pin": "GPIO 35 (Direct Hardwired FACP Fire Relays)"
+      },
+      "target_performance": {
+        "min_clearance_throughput": "120+ persons/minute aggregate (> 30 persons/minute/lane)",
+        "max_tap_latency_ms": 120,
+        "target_uptime_sla": "99.99%",
+        "daily_capacity": 18000
+      },
+      "emergency_interlock": {
+        "fire_alarm_panel_id": "FACP-CENTRAL-MAIN",
+        "failsafe_relay_action": "ENERGIZED_NORMALLY_CLOSED_OPEN_ON_TRIP",
+        "siren_output_db": 105,
+        "soc_automatic_broadcast": true
+      }
+    }
+  ]
+}

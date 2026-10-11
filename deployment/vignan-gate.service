@@ -1,0 +1,28 @@
+[Unit]
+Description=Vignan Smart Access Perimeter Security Server Daemon
+After=network.target network-online.target systemd-timesyncd.service
+
+[Service]
+Type=simple
+User=vignan-soc
+Group=vignan-soc
+WorkingDirectory=/opt/vignan-gate
+ExecStart=/opt/vignan-gate/.venv/bin/uvicorn backend.app:app --host 0.0.0.0 --port 8000 --workers 4
+Restart=always
+RestartSec=3
+KillSignal=SIGINT
+TimeoutStopSec=10
+
+# Security Sandboxing
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Environment Variables
+Environment=ENVIRONMENT=production
+Environment=PORT=8000
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

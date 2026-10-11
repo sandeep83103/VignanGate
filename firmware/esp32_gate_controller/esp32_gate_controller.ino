@@ -43,15 +43,34 @@ unsigned long barrierOpenedAt = 0;
 String lastScannedUid = "";
 unsigned long lastScanMillis = 0;
 volatile bool tailgatingDetected = false;
+volatile bool emergencyEvacuationActive = false;
 
 // ------------------------------------------------------------------------------
 // Interrupt Service Routine for Beam-Break Anti-Tailgating Sensor
 // ------------------------------------------------------------------------------
 void IRAM_ATTR onBeamBreakChange() {
     int beamState = digitalRead(BEAM_SENSOR_PIN);
-    if (beamState == LOW && !barrierIsOpen) {
+    if (beamState == LOW && !barrierIsOpen && !emergencyEvacuationActive) {
         // Beam broken while barrier is legally closed -> Possible perimeter breach / tailgating
         tailgatingDetected = true;
+    }
+}
+
+// ------------------------------------------------------------------------------
+// Interrupt Service Routine for Fire Alarm Emergency Interlock (GPIO 35)
+// ------------------------------------------------------------------------------
+void IRAM_ATTR onFireAlarmTrigger() {
+    int fireState = digitalRead(FIRE_ALARM_PIN);
+    if (fireState == LOW) {
+        // Active LOW dry-contact closed: Fire emergency in progress
+        emergencyEvacuationActive = true;
+        barrierIsOpen = true;
+        digitalWrite(BARRIER_RELAY_PIN, HIGH); // Fail-safe: Force barrier open
+        digitalWrite(LED_GREEN_PIN, HIGH);
+        digitalWrite(LED_RED_PIN, HIGH);     // Visual evacuation signal
+    } else {
+        // Normal contact restored
+        emergencyEvacuationActive = false;
     }
 }
 
@@ -86,6 +105,15 @@ void triggerAccessDenied(const char* reason) {
 }
 
 void updateBarrierState() {
+    // If fire emergency is active, fail-safe rule prevents barrier from closing
+    if (emergencyEvacuationActive) {
+        digitalWrite(BARRIER_RELAY_PIN, HIGH);
+        digitalWrite(LED_GREEN_PIN, HIGH);
+        digitalWrite(LED_RED_PIN, HIGH);
+        barrierIsOpen = true;
+        return;
+    }
+
     if (barrierIsOpen && (millis() - barrierOpenedAt >= BARRIER_OPEN_MS)) {
         digitalWrite(BARRIER_RELAY_PIN, LOW); // De-energize relay (Barrier drops)
         digitalWrite(LED_GREEN_PIN, LOW);
@@ -255,6 +283,7 @@ void networkTelemetryTask(void* pvParameters) {
                 doc["signal_percent"] = constrain(map(WiFi.RSSI(), -90, -30, 0, 100), 0, 100);
                 doc["barrier_state"] = barrierIsOpen ? "OPEN" : "CLOSED";
                 doc["tailgating_flag"] = tailgatingDetected;
+                doc["emergency_evacuation"] = emergencyEvacuationActive;
                 doc["cached_whitelist"] = CacheManager.getCachedEntryCount();
                 doc["free_heap"] = ESP.getFreeHeap();
                 doc["uptime_sec"] = millis() / 1000;
@@ -299,6 +328,9 @@ void setup() {
 
     // Attach Interrupt for Optical Beam-Break Sensor
     attachInterrupt(digitalPinToInterrupt(BEAM_SENSOR_PIN), onBeamBreakChange, CHANGE);
+
+    // Attach Interrupt for Fire Alarm Emergency Interlock (GPIO 35 Active LOW)
+    attachInterrupt(digitalPinToInterrupt(FIRE_ALARM_PIN), onFireAlarmTrigger, CHANGE);
 
     // Initialize Hardware Watchdog Timer (8 sec timeout)
     esp_task_wdt_init(WDT_TIMEOUT_SEC, true);

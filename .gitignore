@@ -44,4 +44,6 @@ Thumbs.db
 # Databases & Runtime storage
 *.db
 *.sqlite3
+*.db-shm
+*.db-wal
 vignan_gate.db

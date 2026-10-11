@@ -26,6 +26,26 @@ async def seed_initial_data(db: AsyncSession):
         {"person_id": "STU20261199", "full_name": "K. Teja", "role": "Student", "department": "Mechanical", "rfid_uid": "E912FA00", "status": "ACTIVE"},
         {"person_id": "SUSP-STU-001", "full_name": "Suspended User", "role": "Student", "department": "Civil", "rfid_uid": "88776655", "status": "SUSPENDED"}
     ]
+    # Seed pilot cohort of 50 active students and 10 faculty for morning rush load testing
+    for i in range(1, 51):
+        users_data.append({
+            "person_id": f"STU2026{1300 + i}",
+            "full_name": f"Pilot Student {i}",
+            "role": "Student",
+            "department": "CSE" if i % 2 == 0 else "ECE",
+            "rfid_uid": f"AA{i:02d}BB{i:02d}",
+            "status": "ACTIVE"
+        })
+    for j in range(1, 11):
+        users_data.append({
+            "person_id": f"FAC105{j:02d}",
+            "full_name": f"Faculty Member {j}",
+            "role": "Faculty",
+            "department": "Administration",
+            "rfid_uid": f"CC{j:02d}DD{j:02d}",
+            "status": "ACTIVE"
+        })
+
     for u in users_data:
         existing = await db.execute(select(User).where(User.person_id == u["person_id"]))
         if not existing.scalars().first():

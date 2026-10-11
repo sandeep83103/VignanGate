@@ -49,18 +49,43 @@ class ESP32GateController:
         self.gate_name = gate_name
         self.is_online = True
         self.barrier_open = False
+        self.emergency_mode = False
         self.cache = OfflineCacheSimulator()
         self.uptime_sec = 0
+
+    def trigger_fire_alarm(self, active: bool = True) -> Dict[str, Any]:
+        """Simulates physical GPIO 35 dry-contact fire alarm interlock interrupt."""
+        self.emergency_mode = active
+        if active:
+            self.barrier_open = True
+            return {
+                "action": "FAILSAFE_EVACUATION_TRIGGERED",
+                "gpio_pin": 35,
+                "barrier_state": "EMERGENCY_OPEN",
+                "relay_status": "ENERGIZED_CONTINUOUS",
+                "visual_indicator": "DUAL_LED_STROBE"
+            }
+        else:
+            self.barrier_open = False
+            return {
+                "action": "FAILSAFE_EVACUATION_RESET",
+                "gpio_pin": 35,
+                "barrier_state": "CLOSED",
+                "relay_status": "DE_ENERGIZED",
+                "visual_indicator": "NORMAL"
+            }
 
     def generate_heartbeat(self) -> Dict[str, Any]:
         """Generates MQTT telemetry heartbeat JSON matching firmware schema."""
         self.uptime_sec += 5
+        barrier_status = "EMERGENCY_OPEN" if self.emergency_mode else ("OPEN" if self.barrier_open else "CLOSED")
         return {
             "device_id": f"ESP32-{self.gate_id}",
             "gate": self.gate_name,
             "status": "ONLINE" if self.is_online else "OFFLINE",
             "signal_percent": random.randint(84, 98),
-            "barrier_state": "OPEN" if self.barrier_open else "CLOSED",
+            "barrier_state": barrier_status,
+            "emergency_evacuation": self.emergency_mode,
             "tailgating_flag": False,
             "cached_whitelist": len(self.cache.whitelist),
             "free_heap": random.randint(184000, 210000),
@@ -72,6 +97,16 @@ class ESP32GateController:
         """Handles RFID card tap according to online/offline state machine."""
         uid_clean = uid.strip().upper()
         
+        if self.emergency_mode:
+            return {
+                "mode": "EMERGENCY_EVACUATION",
+                "gate_id": self.gate_id,
+                "card_uid": uid_clean,
+                "decision": "GRANTED_EVACUATION",
+                "reason": "Fire Alarm Interlock Active - Free Flow",
+                "barrier_actuation": "HOLD_OPEN"
+            }
+
         if self.is_online:
             # Pushes scan event payload to cloud
             return {

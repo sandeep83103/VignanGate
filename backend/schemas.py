@@ -10,10 +10,27 @@ class TelemetryPayload(BaseModel):
     signal_percent: int = Field(ge=0, le=100)
     barrier_state: str = "CLOSED"
     tailgating_flag: bool = False
+    emergency_evacuation: Optional[bool] = False
     cached_whitelist: Optional[int] = 0
     free_heap: Optional[int] = 0
     uptime_sec: Optional[int] = 0
     timestamp: Optional[int] = None
+
+# Emergency Evacuation Schemas
+class EmergencyReleaseRequest(BaseModel):
+    triggered_by: Optional[str] = "Fire Alarm Control Panel (FACP-Main)"
+    reason: Optional[str] = "Central Fire Alarm Interlock Tripped (GPIO 35)"
+
+class EmergencyResetRequest(BaseModel):
+    officer_id: Optional[str] = "CHIEF_SECURITY"
+    notes: Optional[str] = "All zones cleared. Normal perimeter operations restored."
+
+class EmergencyStatusResponse(BaseModel):
+    status: str
+    timestamp: str
+    active: bool
+    gates_affected: List[str]
+    message: str
 
 # Scan Ingestion Request
 class ScanRequest(BaseModel):

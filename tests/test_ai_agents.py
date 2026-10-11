@@ -99,8 +99,13 @@ async def test_authorization_agent_curfew_enforcement():
 
 @pytest.mark.asyncio
 async def test_anomaly_agent_anti_passback():
+    from sqlalchemy import delete
     anomaly_agent = AnomalyAgent()
     async with AsyncSessionLocal() as db:
+        # Clear any leftover logs for test user
+        await db.execute(delete(AccessLog).where(AccessLog.person_id == "STU20261082"))
+        await db.commit()
+
         # Record a prior entry access log 2 minutes ago
         two_mins_ago = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=2)
         prior_log = AccessLog(
