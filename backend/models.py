@@ -49,7 +49,8 @@ class Visitor(Base):
     purpose = Column(String(256), nullable=False)
     gate_id = Column(String(32), nullable=False)
     qr_hash = Column(String(128), nullable=True)
-    approval_status = Column(String(16), default="APPROVED") # APPROVED, PENDING, REJECTED
+    signed_token = Column(Text, nullable=True)
+    approval_status = Column(String(16), default="PENDING") # PENDING, APPROVED, REJECTED
     created_at = Column(DateTime, default=utc_now)
 
 
@@ -80,3 +81,18 @@ class Alert(Base):
     action_required = Column(String(256), nullable=False)
     status = Column(String(16), default="ACTIVE") # ACTIVE, RESOLVED
     assigned_officer = Column(String(64), default="Unassigned")
+
+
+class ERPSyncLog(Base):
+    __tablename__ = "erp_sync_logs"
+
+    sync_id = Column(Integer, primary_key=True, autoincrement=True)
+    timestamp = Column(DateTime, default=utc_now, index=True)
+    source = Column(String(64), default="Vignan-SIS-Cloud")
+    records_processed = Column(Integer, default=0)
+    records_added = Column(Integer, default=0)
+    records_updated = Column(Integer, default=0)
+    records_suspended = Column(Integer, default=0)
+    status = Column(String(16), default="COMPLETED") # COMPLETED, FAILED
+    duration_ms = Column(Integer, default=0)
+

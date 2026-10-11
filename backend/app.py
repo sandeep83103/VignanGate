@@ -10,7 +10,7 @@ from backend.database import engine, Base, AsyncSessionLocal
 from backend.services.seed import seed_initial_data
 from backend.services.websocket_manager import ws_manager
 
-from backend.routers import access, gates, visitors, alerts, telemetry
+from backend.routers import access, gates, visitors, alerts, telemetry, erp
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -48,6 +48,7 @@ app.include_router(gates.router)
 app.include_router(visitors.router)
 app.include_router(alerts.router)
 app.include_router(telemetry.router)
+app.include_router(erp.router)
 
 # WebSocket Endpoint for Real-Time SOC Dashboards
 @app.websocket("/ws/soc")

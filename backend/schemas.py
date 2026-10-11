@@ -40,6 +40,7 @@ class ScanResponse(BaseModel):
     barrier_command: str # OPEN_BARRIER, LOCK_BARRIER, HOLD_CLOSED
     reason: str
     timestamp: str
+    method: str = "RFID"
     anomaly_flags: List[str] = []
     agent_trace: List[AgentTraceItem] = []
     pipeline_latency_ms: float = 0.0

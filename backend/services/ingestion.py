@@ -125,6 +125,7 @@ class IngestionService:
             barrier_command=barrier_command,
             reason=reason,
             timestamp=now_str,
+            method=req.method,
             anomaly_flags=ctx.anomaly_flags,
             agent_trace=trace_items,
             pipeline_latency_ms=ctx.total_pipeline_ms
